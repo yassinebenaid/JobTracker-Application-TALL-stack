@@ -36,6 +36,16 @@
 
         <div class="py-2">
             <div class="text-sm">
+                <i class="mx-2 bi bi-geo-alt-fill"></i>
+                <span>job Location</span>
+            </div>
+            <div class="py-2 pl-10"><span
+                    class="px-3 py-1 text-sm font-semibold rounded-lg bg-slate-200 text-slate-600">{{ $this->job->country }},{{ $this->job->city }}</span>
+            </div>
+        </div>
+
+        <div class="py-2">
+            <div class="text-sm">
                 <i class="mx-2 bi bi-cash-coin"></i>
                 <span>job salary</span>
             </div>
