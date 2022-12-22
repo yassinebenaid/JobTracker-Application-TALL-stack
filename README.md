@@ -1,3 +1,36 @@
+
+# introduction
+
+this project is a simple web application , indeed like application , but in simple manner
+where you can register eighter as an intrepreneur or emploee, entrepreneurs can create a job , or see other entrpreneurs's jobs , but they can't intract with them
+, emploee can intract with jobs , can send applications for jobs , or report them , they can also 
+view or download ther resume as pdf file .
+
+# Tools
+- Laravel .
+- Livewire .
+- Alpinejs .
+- Tailwindcss .
+
+
+## Authors
+
+- [@yassinebenaid](https://www.github.com/yassinebenaid)
+
+
+## Installation
+
+ - clone the repository
+ - copy `.env.example` to `.env`
+ - optionally for mailing configure your credentials 
+ - run  `composer install`
+ - run `npm install`
+ - run `php artisan migrate`
+ - run `php artisan serve`
+ - run `npm run dev`
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
