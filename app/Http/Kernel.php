@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ShouldBeEntrepreneur;
 use App\Http\Middleware\UserHasCompleteHisProfile;
 use App\Http\Middleware\UserHasNotCompleteHisProfile;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'completed' => UserHasCompleteHisProfile::class,
         'not_completed' => UserHasNotCompleteHisProfile::class,
+        'entrepreneur' => ShouldBeEntrepreneur::class
     ];
 }

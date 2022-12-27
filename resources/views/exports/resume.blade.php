@@ -9,7 +9,7 @@
 
     <style>
         body {
-            font-family: sans-serif
+            font-family: sans-serif;
         }
     </style>
 </head>
@@ -17,8 +17,10 @@
 <body>
 
     <div style="display: inline-flex;background-color:#bde0fe93;width:100%;padding:2rem;border-radius:1rem">
-        <img style="border-radius: 50%;width:6rem;display:inline"
-            src="https://upload.wikimedia.org/wikipedia/en/8/86/Avatar_Aang.png" alt="">
+        @if ($user->photo)
+            <img style="border-radius: 50%;width:6rem;height:6rem;display:inline" src="storage/{{ $user->photo }}"
+                alt="">
+        @endif
 
         <div style="display: inline-flex;margin-left:2rem">
             <div style="font-size: 2rem;font-weight:550">{{ $user->name }}</div>

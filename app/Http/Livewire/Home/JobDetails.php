@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Home;
 
-use App\Services\JobService;
+use App\Services\WorkService;
 use Livewire\Component;
 
 class JobDetails extends Component
@@ -18,7 +18,7 @@ class JobDetails extends Component
 
     public function getJobProperty()
     {
-        return JobService::allAboutJob($this->jobId);
+        return WorkService::allAboutWork($this->jobId);
     }
 
 

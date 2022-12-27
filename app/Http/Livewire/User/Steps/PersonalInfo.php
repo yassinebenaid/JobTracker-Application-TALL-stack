@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire\User\Steps;
 
+use App\Enums\Roles;
 use App\Traits\dealWithRoles;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 class PersonalInfo extends StepComponent
 {
-    use dealWithRoles;
-
     /**
      * user full name
      *
@@ -40,17 +39,6 @@ class PersonalInfo extends StepComponent
         "country" => "required|max:255",
         "birthday" => "required|date",
     ];
-
-    /**
-     * (comes with livewire)
-     *
-     * @return void
-     */
-    public function mount()
-    {
-        session()->forget("profile.personal-info");
-    }
-
 
     /**
      * submit the form , validate and set the data in the session to save it later
@@ -89,9 +77,19 @@ class PersonalInfo extends StepComponent
      */
     private function jumpToNextStep()
     {
-        if ($this->isEmploees()) return $this->nextStep();
+        if ($this->isEmploee()) return $this->nextStep();
 
-        if ($this->isEntrepreneurs()) return $this->showStep("image");
+        if ($this->isEntrepreneur()) return $this->showStep("image");
+    }
+
+    private function isEmploee(): bool
+    {
+        return Roles::isEmploee(session("profile.role"));
+    }
+
+    private function isEntrepreneur(): bool
+    {
+        return Roles::isEntrepreneur(session("profile.role"));
     }
 
     /**

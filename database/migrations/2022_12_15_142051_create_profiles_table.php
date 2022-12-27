@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("school")->nullable();
             $table->string("degree_year")->nullable();
             $table->string("job")->nullable();
+            $table->text("bio")->nullable();
             $table->string("experience_years")->nullable();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
             $table->timestamps();

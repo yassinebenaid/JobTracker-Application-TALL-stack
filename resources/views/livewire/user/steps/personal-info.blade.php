@@ -4,12 +4,13 @@
         Job Traker
     </div>
 
-    <div class="w-[50rem]">
+    <div class="w-[50rem] relative">
 
         <div class="m-5 text-4xl 0 w-[50rem]">
             Personal Info:
             <p class="text-sm">tell us about your self to help us give you the right recommendation</p>
         </div>
+
         <div>
             <form wire:submit.prevent='save' class="flex flex-col gap-2 m-20 i">
                 <div class="flex flex-col p-1 ">
@@ -49,5 +50,8 @@
                 </div>
             </form>
         </div>
+
+        <x-loading.loading-spinner-2 />
+
     </div>
 </div>

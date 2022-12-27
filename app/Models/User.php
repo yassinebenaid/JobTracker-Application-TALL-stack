@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\Roles;
+use App\Traits\dealWithRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,5 +56,21 @@ class User extends Authenticatable
     public function skills()
     {
         return $this->belongsToMany(Skill::class, "user_skill", "user_id", "skill_id");
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
+
+    public function applications()
+    {
+        if ($this->hasRole(Roles::EMPLOEE->value))
+
+            return  $this->hasMany(Application::class, "emploee_id");
+
+        elseif ($this->hasRole(Roles::ENTREPRENEUR->value))
+
+            return  $this->hasMany(Application::class, "company_id");
     }
 }

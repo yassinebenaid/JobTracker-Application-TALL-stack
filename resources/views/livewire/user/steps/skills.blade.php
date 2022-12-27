@@ -11,7 +11,7 @@
             <p class="text-sm">what are exactly your ablilities</p>
         </div>
 
-        <div>
+        <div class="relative">
             <div class="flex flex-col items-center gap-2 m-20">
 
                 <div class="flex flex-wrap w-full gap-2 p-5 text-sm text-gray-300 border rounded-lg select-none">
@@ -42,9 +42,11 @@
                         class="bg-sky-500 w-[25rem] text-white py-2 px-10 rounded-lg shadow shadow-sky-500  ">Next</button>
                 </div>
             </div>
+
+            <x-loading.loading-spinner-2 />
+
         </div>
     </div>
 
-    <script></script>
+
 </div>
-{{-- e.id == id --}}

@@ -12,25 +12,43 @@ class Job extends Model
 {
     use HasFactory;
 
+    protected $table = "thejobs";
+
+
+    protected $fillable = [
+        "user_id",
+        "title",
+        "country",
+        "city",
+        "salary",
+        "type",
+        "description",
+        "criteria"
+    ];
+
     public function skills()
     {
         return $this->belongsToMany(Skill::class, "job_skill", "job_id", "skill_id");
     }
 
-    public function company()
+
+    public function user()
     {
-        return $this->belongsTo(User::class, "id");
+        return $this->belongsTo(User::class);
     }
+
 
     public function getTypeAttribute()
     {
-        return JobTypes::getTypeName($this->attributes['type']);
+        return JobTypes::getTypeName((int)$this->attributes['type']);
     }
+
 
     public function getCriteriaAttribute()
     {
         return collect(json_decode($this->attributes['criteria']));
     }
+
 
     public function scopeFilter($query, array $filters)
     {

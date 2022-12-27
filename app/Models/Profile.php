@@ -17,9 +17,13 @@ class Profile extends Model
         "school",
         "birthday",
         "degree",
-        "user_id"
+        "user_id",
+        "bio"
     ];
 
+    protected $casts = [
+        "degree_year" => "date"
+    ];
 
     public function user()
     {

@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <x-main.header />
+    @include('includes.main.header')
 
     <livewire:home.filters-bar />
 

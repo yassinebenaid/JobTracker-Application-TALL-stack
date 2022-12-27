@@ -23,6 +23,6 @@
     </div>
 
     <div class="relative">
-        <x-widgets.loading-job-details />
+        <x-loading.loading-job-details />
     </div>
 </div>

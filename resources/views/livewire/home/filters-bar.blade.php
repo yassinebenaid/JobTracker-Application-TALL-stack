@@ -1,10 +1,11 @@
-<div x-data="dropdown" x-on:click.outside="hide" :class="{ 'border-b rounded-b-lg': !open }"
+<div x-data="dropdown" x-on:keyup.enter.window="hide" x-on:click.outside="hide"
+    :class="{ 'border-b rounded-b-lg': !open }"
     class="container relative grid grid-cols-3 px-5 py-3 m-auto my-10 bg-white border-t rounded-t-lg border-x">
 
 
     <div class="relative">
         <input type="search" wire:model.defer="filters.keywords" wire:keyup.enter='filter'
-            x-on:keyup.window="($event.key === '/') ? $el.focus() : ''"
+            x-on:keyup.window="($event.key === '/' || $event.key === ':') ? $el.focus() : ''"
             class="w-full pl-20 border-gray-100 rounded-lg focus:shadow focus:ring-0 focus:border-sky-300 placeholder:text-slate-400"
             placeholder="press / to search ...">
         <i class="absolute text-xl text-gray-400 -translate-y-1/2 bi bi-search top-1/2 left-5"></i>
@@ -38,9 +39,12 @@
         </div>
 
         @entrepreneur
-            <div x-on:click="toggle"
-                class="transition-all cursor-pointer text-sky-500 px-4bg-red-200 hover:opacity-60 justify-self-end">
-                <i class="text-4xl transition-all bi bi-plus-circle"></i>
+            <div x-data="dropdown" class="px-4 justify-self-end">
+                <i x-on:click="toggle"
+                    class="text-4xl transition-all cursor-pointer hover:opacity-60 bi bi-plus-circle text-sky-500"></i>
+
+                <livewire:home.create-job-form />
+
             </div>
         @endentrepreneur
     </div>

@@ -2,16 +2,23 @@
     class="relative bg-white h-[47rem] border shadow  rounded-lg overflow-scroll pb-20 no-scroll">
     <header class="p-5 shadow-md">
 
+
         <div class="text-4xl font-bold">{{ $this->job->title }}</div>
-        <div class="text-lg text-gray-500">{{ $this->job->company->name }}</div>
+        <div class="text-lg text-gray-500">{{ $this->job->user->name }}</div>
 
         <div class="flex items-center gap-4 py-4">
 
             @emploee
-                <div
-                    class="px-4 py-2 font-semibold transition-all border rounded-lg cursor-pointer hover:bg-sky-500 text-sky-500 border-sky-500 hover:text-white">
-                    <i class="mx-2 bi bi-send "> </i>
-                    Apply For Job
+                <div x-data="dropdown">
+                    <div x-on:click="toggle"
+                        class="px-4 py-2 font-semibold transition-all border rounded-lg cursor-pointer hover:bg-sky-500 text-sky-500 border-sky-500 hover:text-white">
+                        <i class="mx-2 bi bi-send "> </i>
+                        Apply For Job
+
+                    </div>
+
+                    <livewire:home.application-form :company_id="$this->job->user->id" :job_id="$this->job->id" :expected_salary="$this->job->salary" />
+
                 </div>
             @endemploee
 
@@ -59,7 +66,7 @@
                 <i class="mx-2 bi bi-clipboard-data"></i>
                 <span>Required Skills</span>
             </div>
-            <div class="py-2 pl-10">
+            <div class="flex flex-wrap gap-3 py-2 pl-10">
                 @foreach ($this->job->skills as $skill)
                     <span
                         class="px-3 py-1 font-semibold rounded-lg text-slate-800 bg-slate-200">{{ $skill->name }}</span>
@@ -72,7 +79,7 @@
     <div class="p-5">
         <div class="mb-5 text-2xl font-semibold">Job Description</div>
 
-        @if ($this->job->criteria->count() > 0)
+        @if ($this->job->criteria->isNotEmpty())
 
             <ul class="flex flex-col py-3 text-gray-500">
                 @foreach ($this->job->criteria as $criteria)
@@ -96,6 +103,6 @@
     </div>
 
     <div wire:loading>
-        <x-widgets.loading-job-details />
+        <x-loading.loading-job-details />
     </div>
 </div>

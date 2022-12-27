@@ -9,8 +9,6 @@ use Spatie\LivewireWizard\Components\StepComponent;
 
 class Skills extends StepComponent
 {
-    use dealWithRoles;
-
 
     public function save($skills)
     {

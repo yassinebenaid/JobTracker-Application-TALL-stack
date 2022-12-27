@@ -1,6 +1,6 @@
 <div x-data="card" x-on:job:selected.window="select($event.detail,{{ $job->id }})"
-    :class="{ 'border-sky-800 hover:border-sky-800': selected, 'hover:border-sky-300': !selected }",
-    class="p-5 transition-all bg-white border rounded-lg cursor-pointer select-none hover:shadow-lg ">
+    :class="{ 'border-sky-800 hover:border-sky-800': selected }",
+    class="p-5 transition-all bg-white border rounded-lg cursor-pointer select-none hover:shadow-xl ">
 
     <div class="flex justify-between mb-4 ">
         <div wire:click='$emit("job:changed",{{ $job->id }})' x-on:click="selected=true" class="flex-1 mr-5">
@@ -39,7 +39,7 @@
                     class="mx-2 bi bi-briefcase-fill"></i> {{ $job->type }}</div>
         </div>
 
-        @if ($job->criteria->count() > 0)
+        @if ($job->criteria->isNotEmpty())
 
             <ul class="flex flex-col py-3 text-gray-400">
                 @foreach ($job->criteria as $criteria)
@@ -48,7 +48,7 @@
             </ul>
         @endif
 
-        @if ($job->skills->count() > 0)
+        @if ($job->skills->isNotEmpty())
             <div class="flex flex-wrap gap-1">
                 @foreach ($job->skills as $skill)
                     <div class="px-2 text-sm rounded-md bg-slate-200">{{ $skill->name }}</div>

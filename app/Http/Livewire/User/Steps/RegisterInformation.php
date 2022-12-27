@@ -3,50 +3,49 @@
 namespace App\Http\Livewire\User\Steps;
 
 use App\Enums\Roles;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 class RegisterInformation extends StepComponent
 {
+    /**
+     * typically we use this in views to show the exact view
+     *
+     * @var [type]
+     */
     public $role;
+
 
     public function mount()
     {
         $this->role = session("profile.role");
     }
 
+    /**
+     * save the whole data from the session
+     *
+     * @return void
+     */
     public function save()
     {
-
         DB::beginTransaction();
 
-        if (session("profile.role") == Roles::EMPLOEE->value) :
+        if (Roles::isEmploee($this->data("role"))) :
 
-            $this->registerProfile([
-                ...session("profile.education"),
-                ...session("profile.personal-info"),
-                ...session("profile.job"),
+            $this->registerProfileFromSession();
 
-            ]);
+            $this->registerUserFromSession();
 
-            $this->registerUser([
-                ...session("profile.personal-info"),
-                "image" => session("profile.image"),
-            ]);
-
-            $this->registerUserSkills(session("profile.skills"));
+            $this->registerUserSkillsFromSession();
 
             auth()->user()->assignRole(Roles::EMPLOEE->value);
 
         else :
 
-            $this->registerProfile([
-                ...session("profile.personal-info"),
-            ]);
-            $this->registerUser([
-                ...session("profile.personal-info"),
-                "image" => session("profile.image"),
-            ]);
+            $this->registerProfileFromSession();
+
+            $this->registerUserFromSession();
 
             auth()->user()->assignRole(Roles::ENTREPRENEUR->value);
 
@@ -56,34 +55,65 @@ class RegisterInformation extends StepComponent
 
         session()->forget("profile");
 
-        return $this->redirect("/");
+        return $this->redirect(RouteServiceProvider::HOME);
     }
 
-    private function registerProfile(array $data): void
+    /**
+     * register the profile data
+     *
+     * @return void
+     */
+    private function registerProfileFromSession(): void
     {
         auth()->user()->profile()->updateOrCreate(["id" => auth()->id()], [
-            "country" => $data['country'] ?? null,
-            "job" => $data['job'] ?? null,
-            'birthday' => $data['birthday'] ?? null,
-            'experience_years' => $data['years_of_expe'] ?? null,
-            "degree" => $data["degree"] ?? null,
-            "school" => $data["school"] ?? null,
-            "degree_year" => $data['degree_year'] ?? null,
+            "country" => $this->data("country"),
+            "job" => $this->data("job"),
+            'birthday' => $this->data("birthday"),
+            'experience_years' => $this->data('years_of_expe'),
+            "degree" => $this->data("degree"),
+            "school" => $this->data("school"),
+            "degree_year" => $this->data('degree_year'),
         ]);
     }
 
-    private function registerUser($data)
+    /**
+     * register the needed data
+     *
+     * @return void
+     */
+    private function registerUserFromSession()
     {
         auth()->user()->update([
-            "name" => $data['name'] ?? null,
-            "photo" => $data['image'] ?? null,
+            "name" => $this->data('name'),
+            "photo" => $this->data('image'),
             "is_complete" => true
         ]);
     }
 
-
-    private function registerUserSkills($data)
+    /**
+     * register the skills
+     *
+     * @return void
+     */
+    private function registerUserSkillsFromSession()
     {
-        if (!empty($data)) auth()->user()->skills()->sync($data);
+        if (!empty($this->data("skills")))
+            auth()->user()->skills()->sync($this->data('skills'));
+    }
+
+    /**
+     * get the data from the session to avoid the noice
+     *
+     * @param string $name
+     * @return void
+     */
+    private function data(string $name)
+    {
+        if ($data = session("profile.personal-info.{$name}")) return $data;
+        if ($data = session("profile.education.{$name}")) return $data;
+        if ($data = session("profile.job.{$name}")) return $data;
+        if ($data = session("profile.{$name}")) return $data;
+
+        return null;
     }
 }

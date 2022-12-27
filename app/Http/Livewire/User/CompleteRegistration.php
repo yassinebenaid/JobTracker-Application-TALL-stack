@@ -13,6 +13,8 @@ use Spatie\LivewireWizard\Components\WizardComponent;
 
 class CompleteRegistration extends WizardComponent
 {
+
+
     public function steps(): array
     {
         return [
@@ -25,6 +27,7 @@ class CompleteRegistration extends WizardComponent
             RegisterInformation::class
         ];
     }
+
 
     public function mount()
     {

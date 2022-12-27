@@ -31,6 +31,6 @@
 
 
     <div wire:loading>
-        <x-widgets.loading-jobs />
+        <x-loading.loading-jobs />
     </div>
 </div>

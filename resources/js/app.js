@@ -1,6 +1,8 @@
 import './bootstrap';
 import './alpine';
+import './alerts';
 
+import Swal from 'sweetalert2'
 import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
 
@@ -10,6 +12,7 @@ Alpine.plugin(collapse)
 
 Alpine.start();
 
+window.Swal = Swal;
 
 window.addEventListener('should:scroll', () => {
     window.scroll({

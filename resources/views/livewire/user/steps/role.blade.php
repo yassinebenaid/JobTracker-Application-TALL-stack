@@ -4,7 +4,7 @@
         Job Traker
     </div>
 
-    <div class="w-[50rem]">
+    <div class="w-[50rem] relative">
 
         <div class="m-5 text-4xl 0 w-[40rem]">
             Who are you:
@@ -28,7 +28,10 @@
                     <p class="text-sm">someone who has a project/company</p>
                 </div>
             </div>
+
         </div>
+
+        <x-loading.loading-spinner-2 />
 
     </div>
 </div>

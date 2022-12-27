@@ -9,19 +9,31 @@
             </a>
 
             <ul class="flex items-center gap-5 ">
-                <li class="px-3 py-2 transition-all cursor-pointer hover:text-sky-500 ">Jobs</li>
-                <li class="px-3 py-2 transition-all cursor-pointer hover:text-sky-500">Companies/Entrepreneurs</li>
+                <li class="px-3 py-2 transition-all cursor-pointer hover:text-sky-500 "><a href="{{ route('home') }}">
+                        Jobs </a></li>
+                <li class="px-3 py-2 transition-all cursor-pointer hover:text-sky-500"><a
+                        href="{{ route('companies.index') }}"> Companies/Entrepreneurs </a></li>
             </ul>
         </div>
         <div>
             <ul class="flex items-center text-2xl gap-7">
-                <li><i class="bi bi-bell"></i></li>
-                <li><i class="bi bi-chat-left-dots-fill"></i></li>
+                <li> <i class="transition-all cursor-pointer bi bi-chat-left-dots-fill hover:text-sky-500"></i></li>
+
+                @entrepreneur
+                    <li><a href="{{ route('application.index') }}">
+                            <i class="transition-all cursor-pointer bi bi-journal hover:text-sky-500"></i>
+                        </a>
+                    </li>
+                @endentrepreneur
+
+
+                <livewire:home.notifications />
+
 
                 <li x-data="dropdown" class="relative">
                     <i x-on:click="toggle"
                         class="transition-all cursor-pointer hover:text-sky-500 bi bi-person-fill"></i>
-                    <x-main.profile-model x-show="open" x-cloak x-collapse x-on:click.outside="hide" />
+                    @include('includes.main.profile-model')
                 </li>
             </ul>
         </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Home;
 
 use App\Models\Job;
-use App\Services\JobService;
+use App\Services\WorkService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -30,12 +30,12 @@ class JobsList extends Component
 
     public function getJobsProperty()
     {
-        return JobService::applyJobsList($this->filters);
+        return WorkService::applyWorksList($this->filters);
     }
 
     protected function paginationView()
     {
-        return 'components.widgets.pagination';
+        return 'components.pagination';
     }
 
     public function render()

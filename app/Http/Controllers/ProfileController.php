@@ -14,13 +14,13 @@ class ProfileController extends Controller
     public function showResume()
     {
         $user = auth()->user()->load(["profile", "skills"]);
-        return Pdf::loadView("components.exports.resume", ["user" => $user])->stream();
+        return Pdf::loadView("exports.resume", ["user" => $user])->stream();
     }
 
     public function downloadResume()
     {
         $user = auth()->user()->load(["profile", "skills"]);
-        return Pdf::loadView("components.exports.resume", ["user" => $user])->download($user->name . "-resume.pdf");
+        return Pdf::loadView("exports.resume", ["user" => $user])->download($user->name . "-resume.pdf");
     }
 
     /**
@@ -97,6 +97,20 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
+    /**
+     * Update the user's education information.
+     *
+     * @param  \App\Http\Requests\ProfileUpdateRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateBio(Request $request)
+    {
+        $request->user()->profile->bio = $request->bio;
+
+        $request->user()->profile->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
 
     /**
      * Delete the user's account.

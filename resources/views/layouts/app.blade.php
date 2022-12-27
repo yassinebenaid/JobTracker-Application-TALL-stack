@@ -21,6 +21,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class="overflow-x-hidden font-sans antialiased bg-stone-50 text-slate-600">
@@ -30,7 +31,7 @@
 
 
 
-    <x-widgets.scroll-to-top />
+    <x-scroll-to-top />
 
     <livewire:scripts />
 

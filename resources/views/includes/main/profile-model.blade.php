@@ -1,8 +1,11 @@
-<div {{ $attributes }}
+<div x-show="open" x-cloak x-collapse x-on:click.outside="hide"
     class="absolute z-40 flex flex-col p-2 bg-white border rounded-lg shadow w-96 top-full -right-1/2">
     <div class="flex items-center justify-between gap-3 p-3 border-b">
         <div class="flex gap-3">
-            <img class="rounded-full w-14" src="{{ asset('storage/' . auth()->user()->photo) }}">
+
+            @if (auth()->user()->photo)
+                <img class="rounded-full w-14 h-14" src="{{ asset('storage/' . auth()->user()->photo) }}">
+            @endif
 
             <a href="{{ route('profile.edit') }}">
                 <div class="text-lg font-semibold">

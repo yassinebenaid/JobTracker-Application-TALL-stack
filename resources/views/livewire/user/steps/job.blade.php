@@ -4,7 +4,7 @@
         Job Traker
     </div>
 
-    <div class="w-[50rem]">
+    <div class="w-[50rem] relative">
 
         <div class="m-5 text-4xl 0 w-[40rem]">
             Job:
@@ -39,5 +39,8 @@
                 </div>
             </div>
         </form>
+
+        <x-loading.loading-spinner-2 />
+
     </div>
 </div>
