@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\Roles;
+use App\Models\Filters\UserFilter;
 use App\Traits\dealWithRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -72,5 +73,13 @@ class User extends Authenticatable
         elseif ($this->hasRole(Roles::ENTREPRENEUR->value))
 
             return  $this->hasMany(Application::class, "company_id");
+    }
+
+    public function scopeFilter($query, $search)
+    {
+        $filter = new UserFilter($query);
+
+        $filter->byName($search)
+            ->orByJobSpecification($search);
     }
 }

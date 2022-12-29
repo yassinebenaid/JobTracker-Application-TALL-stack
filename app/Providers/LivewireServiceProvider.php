@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Livewire\User\CompleteRegistration;
+use App\Http\Livewire\User\Steps\CompanyInfo;
 use App\Http\Livewire\User\Steps\Education;
 use App\Http\Livewire\User\Steps\Image;
 use App\Http\Livewire\User\Steps\Job;
@@ -34,6 +35,7 @@ class LivewireServiceProvider extends ServiceProvider
     {
         Livewire::component("role", Role::class);
         Livewire::component("personal-info", PersonalInfo::class);
+        Livewire::component("company-info", CompanyInfo::class);
         Livewire::component("education", Education::class);
         Livewire::component("job", Job::class);
         Livewire::component("skills", Skills::class);

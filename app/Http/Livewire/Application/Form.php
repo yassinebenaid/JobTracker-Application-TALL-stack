@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Home;
+namespace App\Http\Livewire\Application;
 
 use App\Jobs\sendNewApplicationEmail;
 use App\Services\ApplicationService;
@@ -8,7 +8,7 @@ use App\Traits\FireStatusBrowserEvents;
 use Faker\Provider\Lorem;
 use Livewire\Component;
 
-class ApplicationForm extends Component
+class Form extends Component
 {
     use FireStatusBrowserEvents;
 

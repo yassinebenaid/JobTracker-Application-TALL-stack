@@ -5,6 +5,9 @@
 @tailwind utilities;
 
 
+* {
+    /* border: 1px solid red; */
+}
 
 *::-webkit-scrollbar {
     width: 5px;
@@ -70,19 +73,19 @@ body {
 
 @-webkit-keyframes colors {
     0% {
-        stroke: red;
+        stroke: rgb(0, 255, 179);
     }
 
     14.285714286% {
-        stroke: orange;
+        stroke: rgb(0, 255, 234);
     }
 
     28.571428572% {
-        stroke: yellow;
+        stroke: rgb(0, 132, 255);
     }
 
     42.857142858% {
-        stroke: green;
+        stroke: rgb(0, 66, 128);
     }
 
     57.142857144% {
@@ -90,29 +93,29 @@ body {
     }
 
     71.42857143% {
-        stroke: indigo;
+        stroke: rgb(24, 0, 130);
     }
 
     100% {
-        stroke: violet;
+        stroke: rgb(153, 130, 238);
     }
 }
 
 @keyframes colors {
     0% {
-        stroke: red;
+        stroke: rgb(0, 153, 255);
     }
 
     14.285714286% {
-        stroke: orange;
+        stroke: rgb(0, 255, 234);
     }
 
     28.571428572% {
-        stroke: yellow;
+        stroke: rgb(0, 132, 255);
     }
 
     42.857142858% {
-        stroke: green;
+        stroke: rgb(0, 66, 128);
     }
 
     57.142857144% {
@@ -120,11 +123,11 @@ body {
     }
 
     71.42857143% {
-        stroke: indigo;
+        stroke: rgb(24, 0, 130);
     }
 
     100% {
-        stroke: violet;
+        stroke: rgb(153, 130, 238);
     }
 }
 

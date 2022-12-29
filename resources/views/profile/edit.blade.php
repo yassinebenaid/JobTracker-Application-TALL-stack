@@ -23,13 +23,15 @@
                         @include('profile.partials.update-job')
                     </div>
                 </div>
+            @endemploee
 
-                <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
-                    <div class="max-w-xl">
-                        @include('profile.partials.update-bio')
-                    </div>
+            <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-bio')
                 </div>
+            </div>
 
+            @emploee
                 <div class="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
                     <div class="max-w-xl">
                         @include('profile.partials.update-education')

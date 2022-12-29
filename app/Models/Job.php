@@ -52,18 +52,13 @@ class Job extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $filter = new JobFilter;
+        $filter = new JobFilter($query);
 
-        $filter->byKeywords($query, $filters['keywords'] ?? false);
-
-        $filter->bySalary($query, $filters['salary'] ?? false);
-
-        $filter->byType($query, $filters['types'] ?? false);
-
-        $filter->byDate($query, $filters['date'] ?? false);
-
-        $filter->bySkills($query, $filters['skills'] ?? false);
-
-        $filter->byLocation($query, $filters['location'] ?? false);
+        $filter->byKeywords($filters['keywords'] ?? false)
+            ->bySalary($filters['salary'] ?? false)
+            ->byType($filters['types'] ?? false)
+            ->byDate($filters['date'] ?? false)
+            ->bySkills($filters['skills'] ?? false)
+            ->byLocation($filters['location'] ?? false);
     }
 }

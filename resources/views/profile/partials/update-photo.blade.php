@@ -1,7 +1,17 @@
 <div class="flex justify-between w-full ">
     <div class="w-32 h-32">
-        <img class="w-full h-full rounded-full ring-4 ring-sky-500" src="{{ asset('storage/' . auth()->user()->photo) }}"
-            alt="">
+        @if (auth()->user()->photo)
+            <img class="w-full h-full rounded-full ring-2 ring-slate-500"
+                src="{{ asset('storage/' . auth()->user()->photo) }}" alt="">
+        @else
+            @entrepreneur
+                <x-thumpnails.company class="rounded-full" />
+            @endentrepreneur
+
+            @emploee
+                <x-thumpnails.user class="rounded-full" />
+            @endemploee
+        @endif
     </div>
 
     @emploee

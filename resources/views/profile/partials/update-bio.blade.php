@@ -1,14 +1,28 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Bio') }}
-        </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Update your biography .') }}
-        </p>
-    </header>
+    @emploee
+        <header>
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Bio') }}
+            </h2>
 
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __('Update your biography .') }}
+            </p>
+        </header>
+    @endemploee
+
+    @entrepreneur
+        <header>
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('About') }}
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __('Update your company description .') }}
+            </p>
+        </header>
+    @endentrepreneur
 
     <form method="post" action="{{ route('profile.bio.update') }}" class="mt-6 space-y-6">
         @csrf

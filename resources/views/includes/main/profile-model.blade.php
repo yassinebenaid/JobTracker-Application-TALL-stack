@@ -5,6 +5,8 @@
 
             @if (auth()->user()->photo)
                 <img class="rounded-full w-14 h-14" src="{{ asset('storage/' . auth()->user()->photo) }}">
+            @else
+                <x-thumpnails.user class="rounded-full w-14 h-14 " />
             @endif
 
             <a href="{{ route('profile.edit') }}">

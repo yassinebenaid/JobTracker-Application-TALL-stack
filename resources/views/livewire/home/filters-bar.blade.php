@@ -43,7 +43,7 @@
                 <i x-on:click="toggle"
                     class="text-4xl transition-all cursor-pointer hover:opacity-60 bi bi-plus-circle text-sky-500"></i>
 
-                <livewire:home.create-job-form />
+                <livewire:job.form />
 
             </div>
         @endentrepreneur

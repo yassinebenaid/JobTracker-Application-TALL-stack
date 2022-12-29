@@ -43,7 +43,7 @@ class RegisterInformation extends StepComponent
 
         else :
 
-            $this->registerProfileFromSession();
+            $this->registerCompanyProfileFromSession();
 
             $this->registerUserFromSession();
 
@@ -73,6 +73,20 @@ class RegisterInformation extends StepComponent
             "degree" => $this->data("degree"),
             "school" => $this->data("school"),
             "degree_year" => $this->data('degree_year'),
+        ]);
+    }
+
+    /**
+     * register the profile data
+     *
+     * @return void
+     */
+    private function registerCompanyProfileFromSession(): void
+    {
+        auth()->user()->profile()->updateOrCreate(["id" => auth()->id()], [
+            "country" => $this->data("country"),
+            "job" => $this->data("specification"),
+            "bio" => $this->data("about"),
         ]);
     }
 
@@ -110,6 +124,7 @@ class RegisterInformation extends StepComponent
     private function data(string $name)
     {
         if ($data = session("profile.personal-info.{$name}")) return $data;
+        if ($data = session("profile.company-info.{$name}")) return $data;
         if ($data = session("profile.education.{$name}")) return $data;
         if ($data = session("profile.job.{$name}")) return $data;
         if ($data = session("profile.{$name}")) return $data;

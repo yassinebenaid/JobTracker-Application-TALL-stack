@@ -3,7 +3,7 @@
     @if ($this->applications->isNotEmpty())
 
 
-        <div x-data class="flex flex-col max-h-[90vh] gap-2  overflow-scroll no-scroll">
+        <div x-data class="flex flex-col  gap-2  ">
 
             @foreach ($this->applications as $application)
                 <div wire:click="select(@js($application->id))" :class="{ 'border-sky-700': @js($application->id === $selected->id) }"
@@ -22,12 +22,12 @@
 
         </div>
 
-        <div class="relative flex flex-col col-span-2 gap-5  pb-20 overflow-scroll no-scroll max-h-[90vh]">
+        <div class="relative flex  flex-col col-span-2 gap-5  pb-20 overflow-scroll no-scroll max-h-[90vh]">
 
             <div class="flex flex-col p-5 bg-white border rounded-xl">
 
                 @if ($selected->emploee->photo)
-                    <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                    <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                         <div>photo</div>
                         <div>
                             <img class="w-32 h-32 rounded-full" src="{{ asset('storage/' . $selected->emploee->photo) }}"
@@ -36,26 +36,26 @@
                     </div>
                 @endif
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>Name</div>
                     <div>
                         {{ $selected->emploee->name }}
                     </div>
                 </div>
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>Email</div>
                     <div>
                         {{ $selected->emploee->email }}
                     </div>
                 </div>
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>Address</div>
                     <div>
                         {{ $selected->emploee->profile->country }}
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>Job title</div>
                     <div>
                         {{ $selected->emploee->profile->job }}
@@ -64,14 +64,14 @@
 
 
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full   px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>experience</div>
                     <div>
                         {{ $years = $selected->emploee->profile->experience_years }} @choice('year|years', $years)
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>Skills</div>
                     <div class="flex flex-wrap gap-2">
                         @foreach ($selected->emploee->skills as $skill)
@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>Degree</div>
                     <div>
                         {{ $selected->emploee->profile->degree }},
@@ -91,21 +91,21 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>expected salary</div>
                     <div>
                         {{ $selected->expected_salary }}$
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>Bio</div>
                     <div>
                         {{ $selected->emploee->profile->bio }}.
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 px-5 py-3 transition-all border-b border-slate-100 ">
+                <div class="grid grid-cols-2 w-full break-words  px-5 py-3 transition-all border-b border-slate-100 ">
                     <div>cover</div>
                     <div>
                         {{ $selected->cover_letter }}

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Home;
+namespace App\Http\Livewire\Job;
 
-use App\Services\WorkService;
+use App\Services\JobService;
 use Livewire\Component;
 
-class JobDetails extends Component
+class Details extends Component
 {
     public $jobId;
 
@@ -18,12 +18,12 @@ class JobDetails extends Component
 
     public function getJobProperty()
     {
-        return WorkService::allAboutWork($this->jobId);
+        return JobService::allAboutWork($this->jobId);
     }
 
 
     public function render()
     {
-        return view('livewire.home.job-details');
+        return view('livewire.job.details');
     }
 }

@@ -6,10 +6,12 @@ namespace Database\Seeders;
 
 use App\Enums\Roles;
 use App\Models\Job;
+use App\Models\Profile;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,8 +26,6 @@ class DatabaseSeeder extends Seeder
 
         Skill::factory(50)->create();
 
-        Artisan::call("permission:create-role " . Roles::EMPLOEE->value);
-        Artisan::call("permission:create-role " . Roles::ENTREPRENEUR->value);
 
         foreach (User::where("id", ">=", 2)->get() as $user) {
             $user->assignRole(Roles::ENTREPRENEUR->value);
@@ -39,9 +39,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Profile::factory(40)->create();
     }
 }

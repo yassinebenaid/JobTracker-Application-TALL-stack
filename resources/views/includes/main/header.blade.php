@@ -1,4 +1,4 @@
-<div class="h-20 bg-white shadow-sm">
+<div class="sticky top-0 z-50 h-20 bg-white shadow-sm">
     <div class="container flex items-center justify-between h-full m-auto">
         <div class="flex items-center gap-20">
             <a href="{{ route('home') }}" class="flex items-center gap-1">

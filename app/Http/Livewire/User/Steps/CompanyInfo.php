@@ -2,23 +2,22 @@
 
 namespace App\Http\Livewire\User\Steps;
 
-use App\Enums\Roles;
-use App\Traits\dealWithRoles;
+
 use Spatie\LivewireWizard\Components\StepComponent;
 
-class PersonalInfo extends StepComponent
+class CompanyInfo extends StepComponent
 {
     /**
-     * user full name
+     * company name
      *
-     * @var [type]
+     * @var string
      */
     public $name;
 
     /**
-     * user country
+     *  country
      *
-     * @var [type]
+     * @var
      */
     public $country;
 
@@ -27,7 +26,14 @@ class PersonalInfo extends StepComponent
      *
      * @var [type]
      */
-    public $birthday;
+    public $specification;
+
+    /**
+     * about the company
+     *
+     * @var [type]
+     */
+    public $about;
 
     /**
      * rules for validation ( comes with livewire)
@@ -37,7 +43,8 @@ class PersonalInfo extends StepComponent
     protected $rules = [
         "name" => "required|max:255",
         "country" => "required|max:255",
-        "birthday" => "required|date",
+        "specification" => "required|max:255",
+        "about" => "required|min:255"
     ];
 
     /**
@@ -51,7 +58,7 @@ class PersonalInfo extends StepComponent
 
         $this->setDataToSession();
 
-        $this->showStep("education");
+        $this->showStep("image");
     }
 
     /**
@@ -64,9 +71,10 @@ class PersonalInfo extends StepComponent
         $data = [
             "name" => $this->name,
             "country" => $this->country,
-            "birthday" => $this->birthday
+            "specification" => $this->specification,
+            "about" => $this->about
         ];
 
-        session()->put("profile.personal-info", $data);
+        session()->put("profile.company-info", $data);
     }
 }

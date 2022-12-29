@@ -6,7 +6,7 @@
         class="pb-20 flex relative flex-col gap-3 overflow-scroll h-[46.5rem] p-3 no-scroll">
 
         @foreach ($this->jobs as $job)
-            <livewire:home.job-card :job="$job" :wire:key="$job->id" />
+            <livewire:job.card :job="$job" :wire:key="$job->id" />
         @endforeach
 
         {{ $this->jobs->links() }}
@@ -27,7 +27,7 @@
     </div>
 
 
-    <livewire:home.job-details :jobId="$this->jobs->first()?->id" />
+    <livewire:job.details :jobId="$this->jobs->first()?->id" />
 
 
     <div wire:loading>

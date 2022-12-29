@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\Home;
+namespace App\Http\Livewire\Job;
 
 use App\Enums\Roles;
-use App\Services\WorkService;
+use App\Services\JobService;
 use App\Services\SkillService;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
-class CreateJobForm extends Component
+class Form extends Component
 {
     use AuthorizesRequests;
 
@@ -49,7 +49,7 @@ class CreateJobForm extends Component
         $this->validate();
 
 
-        if (WorkService::new($this->all()))
+        if (JobService::new($this->all()))
 
             return $this->dispatchBrowserEvent("status:success", [
                 "message" => "job created successfully."

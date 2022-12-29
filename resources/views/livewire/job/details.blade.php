@@ -17,7 +17,7 @@
 
                     </div>
 
-                    <livewire:home.application-form :company_id="$this->job->user->id" :job_id="$this->job->id" :expected_salary="$this->job->salary" />
+                    <livewire:application.form :company_id="$this->job->user->id" :job_id="$this->job->id" :expected_salary="$this->job->salary" />
 
                 </div>
             @endemploee

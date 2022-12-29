@@ -12,13 +12,13 @@ class Role extends StepComponent
     public function emploee()
     {
         $this->setRole(Roles::EMPLOEE);
-        $this->nextStep();
+        $this->jumpToNextStep(Roles::EMPLOEE);
     }
 
     public function entrepreneur()
     {
         $this->setRole(Roles::ENTREPRENEUR);
-        $this->nextStep();
+        $this->jumpToNextStep(Roles::ENTREPRENEUR);
     }
 
     private function setRole(Roles $role): void
@@ -27,8 +27,9 @@ class Role extends StepComponent
         session()->put("profile.role", $role->value);
     }
 
-    public function render()
+    private function jumpToNextStep(Roles $role)
     {
-        return view('livewire.user.steps.role');
+        if ($role === Roles::EMPLOEE) return $this->showStep("personal-info");
+        elseif ($role === Roles::ENTREPRENEUR) return $this->showStep("company-info");
     }
 }

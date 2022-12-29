@@ -3,12 +3,25 @@
 namespace App\Models\Filters;
 
 use App\Enums\JobTypes;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
-class JobFilter
+
+
+class JobFilter extends Filter
 {
-    public function bySalary($query, array|false $salary)
+    /** @var \Illuminate\Contracts\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model  */
+    protected Builder $builder;
+
+
+    public function __construct(Builder $builder)
     {
-        $query->when($salary ?? false, function ($query, $salary) {
+        $this->builder = $builder;
+    }
+
+
+    public function bySalary(array|false $salary): static
+    {
+        $this->builder->when($salary ?? false, function ($query, $salary) {
 
             $query->whereExists(function ($query) use ($salary) {
 
@@ -21,11 +34,14 @@ class JobFilter
                 });
             });
         });
+
+        return $this;
     }
 
-    public function byType($query, $types)
+
+    public function byType($types): static
     {
-        $query->when($types ?? false, function ($query, $types) {
+        $this->builder->when($types ?? false, function ($query, $types) {
 
             $types = JobTypes::getTypesIds($types);
 
@@ -33,32 +49,41 @@ class JobFilter
                 $query->whereExists(fn ($query) =>  $query->whereIn("type", $types));
             });
         });
+
+        return $this;
     }
 
-    public function byDate($query, string $date)
+
+    public function byDate(string $date): static
     {
-        $query->when($date ?? false, function ($query, $date) {
+        $this->builder->when($date ?? false, function ($query, $date) {
 
             $query->whereExists(function ($query) use ($date) {
 
-                $date = $this->getdate($date);
+                $date = $this->getFormatedDate($date);
 
                 $query->whereDate("created_at", ">=", $date);
             });
         });
+
+        return $this;
     }
 
-    public function bySkills($query, array|false $skills)
+
+    public function bySkills(array|false $skills): static
     {
-        $query->when($skills ?? false, function ($query, $skills) {
+        $this->builder->when($skills ?? false, function ($query, $skills) {
 
             $query->whereHas("skills", fn ($query) => $query->whereIn("id", $skills));
         });
+
+        return $this;
     }
 
-    public function byLocation($query, array|false $location)
+
+    public function byLocation(array|false $location): static
     {
-        $query->when($location, function ($query, $location) {
+        $this->builder->when($location, function ($query, $location) {
 
             $query->whereExists(function ($query) use ($location) {
 
@@ -67,37 +92,27 @@ class JobFilter
                 $query->when($location['city'] ?? false, fn ($query, $city) => $query->where("city", "like", "%" . $city . "%"));
             });
         });
+
+        return $this;
     }
 
-    public function byKeywords($query, string $keywords)
+
+    public function byKeywords(string $keywords): static
     {
-        $query->when($keywords, function ($query, $keywords) {
+        $keywords = $this->sanitizeString($keywords);
+
+        $this->builder->when($keywords, function ($query, $keywords) {
 
             $query->whereExists(function ($query) use ($keywords) {
 
                 $query->where("title", "like", "%" . $keywords . "%");
 
-                foreach ($this->getKeywords($keywords) as $word) {
+                foreach ($this->devidedWords($keywords) as $word) {
                     $query->orWhere("title", "like", "%" . $word . "%");
                 }
             });
         });
-    }
 
-    protected function getKeywords($keywords)
-    {
-        return explode(" ", $keywords);
-    }
-
-
-    protected function getdate(string $date)
-    {
-        return match ($date) {
-            "today" => now()->subDay()->format("Y-m-d H:i:s"),
-            "week" => now()->subWeek()->format("Y-m-d H:i:s"),
-            "month" => now()->subMonth()->format("Y-m-d H:i:s"),
-            "year" => now()->subYear()->format("Y-m-d H:i:s"),
-            default => 0
-        };
+        return $this;
     }
 }

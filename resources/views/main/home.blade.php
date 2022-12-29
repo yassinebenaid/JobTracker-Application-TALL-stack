@@ -4,7 +4,7 @@
 
     <livewire:home.filters-bar />
 
-    <livewire:home.jobs-list />
+    <livewire:job.jobs-list />
 
 
 </x-app-layout>

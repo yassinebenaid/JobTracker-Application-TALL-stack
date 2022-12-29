@@ -24,7 +24,7 @@
 
 </head>
 
-<body class="overflow-x-hidden font-sans antialiased bg-stone-50 text-slate-600">
+<body class="overflow-x-hidden bg-stone-50 text-slate-700">
 
 
     {{ $slot }}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\User;
 
+use App\Http\Livewire\User\Steps\CompanyInfo;
 use App\Http\Livewire\User\Steps\Education;
 use App\Http\Livewire\User\Steps\Image;
 use App\Http\Livewire\User\Steps\Job;
@@ -20,6 +21,7 @@ class CompleteRegistration extends WizardComponent
         return [
             Role::class,
             PersonalInfo::class,
+            CompanyInfo::class,
             Education::class,
             Job::class,
             Skills::class,

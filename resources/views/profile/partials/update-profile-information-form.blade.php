@@ -31,12 +31,15 @@
             <x-input-error class="mt-2" :messages="$errors->get('country')" />
         </div>
 
-        <div>
-            <x-input-label for="birthday" :value="__('Birthday')" />
-            <x-text-input id="birthday" name="birthday" type="date" class="block w-full mt-1" :value="old('birthday', $user->profile->birthday)"
-                required autocomplete="birthday" />
-            <x-input-error class="mt-2" :messages="$errors->get('birthday')" />
-        </div>
+        @emploee
+            <div>
+                <x-input-label for="birthday" :value="__('Birthday')" />
+                <x-text-input id="birthday" name="birthday" type="date" class="block w-full mt-1" :value="old('birthday', $user->profile->birthday)"
+                    required autocomplete="birthday" />
+                <x-input-error class="mt-2" :messages="$errors->get('birthday')" />
+            </div>
+        @endemploee
+
 
         <div>
             <x-input-label for="email" :value="__('Email')" />

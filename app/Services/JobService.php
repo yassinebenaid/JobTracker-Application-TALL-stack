@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Job;
 use Illuminate\Support\Facades\DB;
 
-class WorkService
+class JobService
 {
     protected static $attributes = [
         "id", "user_id", "title", "criteria", "type", "country", "city", "salary", "created_at"
