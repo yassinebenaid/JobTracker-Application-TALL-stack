@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\ReportReasons;
 use App\Models\Job;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,7 @@ class JobService
     ];
 
 
-    public static function applyWorksList(array $filters = [])
+    public static function applyJobsList(array $filters = [])
     {
         $filters = filterEmptyValues($filters);
 
@@ -22,9 +23,17 @@ class JobService
             ->paginate(6, self::$attributes);
     }
 
-    public static function allAboutWork(int $id)
+    public static function allAboutJob(int $id)
     {
-        return Job::whereId($id)->with("skills:id,name", "user:id,name")->select(self::$attributes)->first();
+        return Job::select([...self::$attributes, "description"])
+            ->with(["skills:id,name", "user:id,name"])
+            ->whereId($id)
+            ->first();
+    }
+
+    public static function inWishlist(Job $job)
+    {
+        return (bool) $job->wishlist()->whereUserId(auth()->id())->first();
     }
 
 
@@ -54,5 +63,31 @@ class JobService
         } catch (\Throwable $th) {
             return false;
         }
+    }
+
+    public static function report(Job $job, array $report)
+    {
+        try {
+            $job->reports()->create([
+                "info" => $report['info'],
+                "reason" => ReportReasons::getReasonDefiner($report['reason'])
+            ]);
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public static function toggleToWishlist(Job $job): bool
+    {
+        $result = auth()->user()->wishlist()->toggle($job);
+
+        return in_array($job->id, $result['attached']);
+    }
+
+    public static function wishlist()
+    {
+        return auth()->user()->wishlist()->get();
     }
 }

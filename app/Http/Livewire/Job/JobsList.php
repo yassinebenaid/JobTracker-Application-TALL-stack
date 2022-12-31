@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Job;
 
 use App\Models\Job;
 use App\Services\JobService;
+use App\Services\SkillService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,9 +13,21 @@ class JobsList extends Component
 {
     use WithPagination;
 
-    protected $filters = [];
+    public $filters = [
+        'keywords' => '',
+        "date" => '',
+        "types" => [],
+        "location" => [
+            "country" => '',
+            "city" => ''
+        ],
+        "skills" => [],
+        "salary" => [
+            "min" => '',
+            "max" => '',
+        ],
+    ];
 
-    protected $listeners = ["filter-mode:on" => "filter"];
 
     public function updatedPage()
     {
@@ -22,24 +35,23 @@ class JobsList extends Component
         $this->emit('job:changed', $this->jobs->first()->id);
     }
 
-    public function filter($filters)
+    public function filter()
     {
-        $this->filters = $filters;
         $this->dispatchBrowserEvent("should:scroll");
     }
 
     public function getJobsProperty()
     {
-        return JobService::applyWorksList($this->filters);
+        return JobService::applyJobsList($this->filters);
+    }
+
+    public function getSkillsProperty()
+    {
+        return SkillService::applyListOfSkills();
     }
 
     protected function paginationView()
     {
         return 'components.pagination';
-    }
-
-    public function render()
-    {
-        return view('livewire.job.jobs-list');
     }
 }

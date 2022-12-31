@@ -1,27 +1,42 @@
-<div x-cloak x-show="report" class="grid h-[40rem] grid-rows-6  col-span-5">
-    <div class="grid grid-cols-2 row-span-5 p-5">
-        <div class="grid items-start grid-cols-2">
-            @foreach (range(1, 7) as $rule)
-                <div class="p-3">
-                    <label for="{{ $loop->index }}" class="cursor-pointer">Contain nudes</label>
-                    <input class="p-3 rounded-md cursor-pointer focus:ring-0 focus:outline-0 text-sky-500" type="checkbox"
-                        id="{{ $loop->index }}">
-                </div>
-            @endforeach
-        </div>
+<form wire:submit.prevent='report' x-on:status:success.window="$el.reset()" x-cloak x-show="report"
+    class="grid h-[40rem] p-6 col-span-5">
 
+    <div>
+        <div class="text-lg font-semibold">
+            laravel developer needed.
+        </div>
         <div>
-            <label class='block text-sm font-medium text-gray-700'>somthing else </label>
-            <input type="text"
-                class='w-full border rounded-md shadow-sm border-slate-400 focus:border-sky-500 focus:ring-0 focus:outline-0' />
+            Company
         </div>
     </div>
 
-    <div class="flex items-center justify-end p-10">
+    <div class="grid gap-4 p-5 pl-20">
 
-        <button
-            class='items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition-all rounded-md bg-sky-600 hover:bg-sky-500 focus:outline-none'>
-            Report
+        @foreach (\App\Enums\ReportReasons::cases() as $reason)
+            <div>
+                <input wire:model.defer='report.reason' class="cursor-pointer" name="report_choice" type="radio"
+                    id="{{ $reason->value }}" value="{{ $reason->value }}">
+                <label class="cursor-pointer" for="{{ $reason->value }}">{{ $reason->forCompany() }}</label>
+            </div>
+        @endforeach
+
+    </div>
+
+    <div class="py-5">
+        <label for="otherinfo" class="font-semibold">Additional information.</label>
+        <textarea wire:model.defer='report.info'
+            class="w-5/6 rounded-lg resize-none border-slate-400 focus:ring-0 focus:border-sky-500"></textarea>
+
+        @error('report.info')
+            <div class="w-5/6 text-sm text-center text-red-500">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="flex items-center justify-end">
+        <button type="submit"
+            class="px-8 py-2 transition-all border-2 rounded-lg border-sky-600 text-sky-600 hover:text-white hover:bg-sky-600"><i
+                class="bi bi-flag-fill"></i> Report
         </button>
     </div>
-</div>
+
+</form>

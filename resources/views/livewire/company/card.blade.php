@@ -21,17 +21,24 @@
             </div>
 
             <div>
-                <x-stars stars=3 />
+                <x-stars :stars="$company->reviews_avg_rate" />
             </div>
 
 
             <div class="flex gap-3">
-                <div class="text-sm hover:underline text-slate-500">
-                    reviews
-                </div>
-                <div class="text-sm hover:underline text-slate-500">
+                <div x-on:click="$dispatch('about')" class="text-sm hover:underline text-slate-500">
                     about
                 </div>
+                <div x-on:click="$dispatch('review')" class="text-sm hover:underline text-slate-500">
+                    reviews
+                </div>
+
+                @emploee
+                    <div x-on:click="$dispatch('report')" class="text-sm hover:underline text-slate-500">
+                        report
+                    </div>
+                @endemploee
+
             </div>
         </div>
     </div>

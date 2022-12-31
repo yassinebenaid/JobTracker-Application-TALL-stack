@@ -64,6 +64,13 @@ class User extends Authenticatable
         return $this->hasMany(Job::class);
     }
 
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, "company_id");
+    }
+
+
     public function applications()
     {
         if ($this->hasRole(Roles::EMPLOEE->value))
@@ -81,5 +88,15 @@ class User extends Authenticatable
 
         $filter->byName($search)
             ->orByJobSpecification($search);
+    }
+
+    public function reports()
+    {
+        return $this->morphOne(Report::class, "reportable");
+    }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(Job::class, "wishlist", "user_id", "job_id");
     }
 }

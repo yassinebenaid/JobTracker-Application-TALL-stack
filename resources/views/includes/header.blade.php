@@ -17,7 +17,11 @@
         </div>
         <div>
             <ul class="flex items-center text-2xl gap-7">
-                <li> <i class="transition-all cursor-pointer bi bi-chat-left-dots-fill hover:text-sky-500"></i></li>
+                <li x-data="{ shown: false }" x-on:new:wishlist.window="shown=true" class="relative">
+                    <a href="{{ route('wishlist.index') }}"> <i
+                            class="transition-all cursor-pointer bi bi-heart hover:text-sky-500"></i></a>
+                    <x-new x-show="shown" />
+                </li>
 
                 @entrepreneur
                     <li><a href="{{ route('application.index') }}">
@@ -33,7 +37,7 @@
                 <li x-data="dropdown" class="relative">
                     <i x-on:click="toggle"
                         class="transition-all cursor-pointer hover:text-sky-500 bi bi-person-fill"></i>
-                    @include('includes.main.profile-model')
+                    @include('includes.profile-model')
                 </li>
             </ul>
         </div>

@@ -1,36 +1,19 @@
-<div x-data="card" x-on:job:selected.window="select($event.detail,{{ $job->id }})"
+<div x-data="card" wire:click='$emit("job:changed",{{ $job->id }})'
+    x-on:job:selected.window="select($event.detail,{{ $job->id }})"
     :class="{ 'border-sky-800 hover:border-sky-800': selected }",
     class="p-5 transition-all bg-white border rounded-lg cursor-pointer select-none hover:shadow-xl ">
 
     <div class="flex justify-between mb-4 ">
-        <div wire:click='$emit("job:changed",{{ $job->id }})' x-on:click="selected=true" class="flex-1 mr-5">
+        <div x-on:click="selected=true" class="flex-1 mr-5">
             <div class="text-2xl font-semibold">{{ $job->title }}</div>
             <div class="tracking-wider text-gray-500">{{ $job->company?->name }}</div>
             <div class="text-sm">{{ $job->country }}, {{ $job->city }} </div>
-        </div>
-
-        {{-- three dots --}}
-        <div x-data="dropdown" class="relative">
-            <i x-on:click="toggle"
-                class="p-2 text-2xl transition-all rounded-lg cursor-pointer bi bi-three-dots-vertical hover:bg-slate-100"></i>
-
-            {{-- pop up --}}
-            <div x-show="open" x-on:click.outside="hide" x-cloak
-                class="absolute top-0 w-40 p-1 bg-white border rounded-lg shadow-sm cursor-pointer right-full">
-                <div class="px-3 py-2 transition-all cursor-pointer hover:bg-slate-100"><i class="bi bi-heart"></i>
-                    Save job
-                </div>
-                <div class="px-3 py-2 transition-all hover:bg-slate-100"><i class="bi bi-flag"></i>
-                    Report job
-                </div>
-
-            </div>
         </div>
     </div>
 
 
     {{-- body --}}
-    <div wire:click='$emit("job:changed",{{ $job->id }})' x-on:click="selected=true">
+    <div>
 
         <div class="flex gap-3 px-2">
             <div class="px-2 py-1 font-bold text-green-700 bg-green-100 rounded-lg w-max"><i

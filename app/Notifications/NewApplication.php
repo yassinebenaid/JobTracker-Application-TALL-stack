@@ -30,7 +30,7 @@ class NewApplication extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', "database"];
     }
 
     /**
@@ -57,7 +57,8 @@ class NewApplication extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            "title" => "New Applicant to \"{$this->application->job->title}\"",
+            "description" => "\"" . substr($this->application->cover_letter, 0, 30) . "...\""
         ];
     }
 }

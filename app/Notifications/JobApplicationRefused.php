@@ -30,7 +30,7 @@ class JobApplicationRefused extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', "database"];
     }
 
     /**
@@ -57,7 +57,8 @@ class JobApplicationRefused extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            "title" => "Your application was refused",
+            "description" => "Your application to \"{$this->application_title}\" was refused, good luck in the next jobs .",
         ];
     }
 }

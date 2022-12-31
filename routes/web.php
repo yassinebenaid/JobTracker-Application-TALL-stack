@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShowApplicationController;
 use App\Http\Controllers\ShowCompaniesPageController;
 use App\Http\Controllers\ShowHomePageController;
+use App\Http\Controllers\ShowWishlistPageController;
 use App\Http\Livewire\User\CompleteRegistration;
 use App\Mail\ApplyForJob;
 use App\Models\User;
@@ -28,13 +29,13 @@ Route::middleware(["auth", "completed"])->group(function () {
 
     Route::get('/companies', ShowCompaniesPageController::class)->name('companies.index');
 
+    Route::get("/wishlist", ShowWishlistPageController::class)->name("wishlist.index");
 
     Route::middleware("entrepreneur")->get('/applications', ShowApplicationController::class)->name('application.index');
 
     Route::middleware('not_completed')->get("/register/complete", CompleteRegistration::class)->name("complete-registration");
-});
 
-Route::middleware('auth')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/edcuation', [ProfileController::class, 'updateEducation'])->name('profile.education.update');

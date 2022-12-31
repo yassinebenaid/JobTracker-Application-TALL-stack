@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    @include('includes.main.header')
+    @include('includes.header')
 
     <livewire:company.companies-list />
 

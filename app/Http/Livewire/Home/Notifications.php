@@ -2,21 +2,35 @@
 
 namespace App\Http\Livewire\Home;
 
-use App\Enums\Roles;
-use App\Services\ApplicationService;
+
+use App\Services\NotificationService;
 use Livewire\Component;
 
 class Notifications extends Component
 {
-    public $applications = [];
+    public $notifications;
+    public $unreadNotifications = false;
 
-    public function refresh()
+    public function mount()
     {
+        $this->notifications = collect();
+        $this->unreadNotifications = NotificationService::thereIsUnreadNotifications();
     }
 
 
-    public function render()
+    public function refresh()
     {
-        return view('livewire.home.notifications');
+        $this->notifications = NotificationService::getNotifications();
+
+        $this->unreadNotifications = false;
+
+        $this->markNotificationsAsRead();
+    }
+
+    private function markNotificationsAsRead()
+    {
+        if (method_exists($this->notifications, "markAsRead") && !$this->unreadNotifications) {
+            $this->notifications->markAsRead();
+        }
     }
 }

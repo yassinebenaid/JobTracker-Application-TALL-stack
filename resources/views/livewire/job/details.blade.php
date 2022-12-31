@@ -6,6 +6,7 @@
         <div class="text-4xl font-bold">{{ $this->job->title }}</div>
         <div class="text-lg text-gray-500">{{ $this->job->user->name }}</div>
 
+
         <div class="flex items-center gap-4 py-4">
 
             @emploee
@@ -21,10 +22,20 @@
 
                 </div>
             @endemploee
-
-            <div class="px-3 py-2 transition-all rounded-lg cursor-pointer hover:bg-slate-200">
-                <i class="text-xl bg-transparent bi bi-heart"></i>
+            <div wire:click="wishlist" x-on:click="$dispatch('new:wishlist')"
+                class="px-5 py-[0.4rem] transition-all border rounded-lg cursor-pointer border-slate-500 hover:text-white hover:bg-slate-500">
+                <i class="text-xl bg-transparent bi bi-heart{{ $inWishlist ? '-fill' : null }}"></i>
             </div>
+
+            <div x-data="dropdown">
+                <div x-on:click="toggle"
+                    class="px-5 py-[0.4rem] transition-all border rounded-lg cursor-pointer border-slate-500 hover:text-white hover:bg-slate-500">
+                    <i class="text-xl bg-transparent bi bi-flag"></i>
+
+                </div>
+                <livewire:job.report :job="$this->job" />
+            </div>
+
         </div>
     </header>
 
@@ -88,7 +99,7 @@
             </ul>
         @endif
 
-        <div class="px-3 pb-5 tracking-wide text-gray-500 border-b">{{ $this->job->description }} </div>
+        <div class="px-3 pb-5 tracking-wide text-gray-500 border-b">{{ $this->job->description }} ===========</div>
     </div>
 
 
@@ -102,7 +113,9 @@
         </div>
     </div>
 
-    <div wire:loading>
-        <x-loading.loading-job-details />
+    <div wire:loading.remove wire:target='wishlist'>
+        <div wire:loading>
+            <x-loading.loading-job-details />
+        </div>
     </div>
 </div>

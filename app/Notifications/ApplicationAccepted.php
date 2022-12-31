@@ -30,7 +30,7 @@ class ApplicationAccepted extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', "database"];
     }
 
     /**
@@ -56,7 +56,8 @@ class ApplicationAccepted extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            "title" => "Your application was accepted",
+            "description" => "Your application to \"{$this->application_title}\" was accepted .",
         ];
     }
 }

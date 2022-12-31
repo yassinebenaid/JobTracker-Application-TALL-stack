@@ -29,8 +29,6 @@
         @method('patch')
 
         <div>
-            <x-input-label for="experience_years" :value="__('Experience Years')" />
-
             <textarea id="bio" name="bio" type="text"
                 class="block w-full mt-1 rounded-lg border-slate-200 h-80 focus:ring-sky-500 focus:border-sky-500"
                 autocomplete="bio">{{ old('bio', $user->profile->bio) }}</textarea>

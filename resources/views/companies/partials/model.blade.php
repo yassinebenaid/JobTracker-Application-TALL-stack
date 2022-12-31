@@ -8,30 +8,51 @@
         <x-loading.loading-spinner-2 target=load />
 
 
-        @if ($opened)
-            <div class="flex flex-col overflow-hidden text-center border-r rounded-l-lg bg-slate-50">
-                <div x-on:click="cabout" :class="{ 'border-l-sky-600 text-sky-600 border-l-8': about }"
-                    class="py-4 text-sm font-semibold transition-all cursor-pointer border-y hover:bg-slate-100">
-                    About
+        <div class="flex flex-col overflow-hidden text-center border-r rounded-l-lg bg-slate-50">
+            <div x-on:click="cabout" x-on:about.window="cabout"
+                :class="{ 'border-l-sky-600 text-sky-600 border-l-8': about }"
+                class="py-4 text-sm font-semibold transition-all cursor-pointer border-y hover:bg-slate-100">
+
+                <div class="grid grid-cols-3">
+                    <i class="bi bi-info-circle"></i>
+                    <span> About</span>
                 </div>
+            </div>
 
-                <div x-on:click="creviews" :class="{ 'border-l-sky-600 text-sky-600 border-l-8': reviews }"
-                    class="py-4 text-sm font-semibold transition-all cursor-pointer hover:bg-slate-100">Reviews</div>
+            <div x-on:click="creviews" x-on:review.window="creviews"
+                :class="{ 'border-l-sky-600 text-sky-600 border-l-8': reviews }"
+                class="gap-3 py-4 text-sm font-semibold transition-all cursor-pointer hover:bg-slate-100">
 
-                <div x-on:click="creport" :class="{ 'border-l-sky-600 text-sky-600 border-l-8': report }"
-                    class="py-4 text-sm font-semibold transition-all cursor-pointer border-y hover:bg-slate-100">Report
+                <div class="grid grid-cols-3">
+                    <i class="bi bi-rss"></i>
+                    <span>Reviews</span>
                 </div>
             </div>
 
 
+            @emploee
+                <div x-on:click="creport" x-on:report.window="creport"
+                    :class="{ 'border-l-sky-600 text-sky-600 border-l-8': report }"
+                    class="gap-3 py-4 text-sm font-semibold transition-all cursor-pointer border-y hover:bg-slate-100">
+
+                    <div class="grid grid-cols-3">
+                        <i class="bi bi-flag"></i>
+                        <span>Report</span>
+                    </div>
+                </div>
+            @endemploee
+
+        </div>
+
+        @if ($opened)
             @include('companies.partials.about')
 
 
             @include('companies.partials.reviews')
 
-
-            @include('companies.partials.report')
-
+            @emploee
+                @include('companies.partials.report')
+            @endemploee
             {{-- --}}
         @endif
 

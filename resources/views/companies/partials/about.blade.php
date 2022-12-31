@@ -5,7 +5,7 @@
             <i class="text-5xl bi bi-building text-slate-400"></i>
         </div>
 
-        <div>
+        <div class="grid">
             <div class="text-xl font-semibold">
                 {{ $company->name }}
             </div>
@@ -14,6 +14,10 @@
             </div>
             <div>
                 {{ $company->profile->job }}
+            </div>
+            <div>
+                <i class="bi bi-star-fill text-sky-600"></i>
+                {{ number_format($company->rate ?? 0, 1) }}
             </div>
         </div>
     </div>

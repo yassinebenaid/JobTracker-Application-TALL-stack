@@ -1,8 +1,7 @@
 <x-app-layout>
 
-    @include('includes.main.header')
+    @include('includes.header')
 
-    <livewire:home.filters-bar />
 
     <livewire:job.jobs-list />
 

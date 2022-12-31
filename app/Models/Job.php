@@ -37,6 +37,15 @@ class Job extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function reports()
+    {
+        return $this->morphOne(Report::class, "reportable");
+    }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(User::class, "wishlist", "job_id", "user_id");
+    }
 
     public function getTypeAttribute()
     {
