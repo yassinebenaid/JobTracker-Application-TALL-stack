@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="sticky top-0">
-        @include('includes.main.header')
+        @include('includes.header')
     </div>
 
     <div class="py-12 ">
