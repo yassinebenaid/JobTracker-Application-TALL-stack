@@ -49,7 +49,7 @@ class Job extends Model
 
     public function getTypeAttribute()
     {
-        return JobTypes::getTypeName((int)$this->attributes['type']);
+        return JobTypes::getTypeName($this->attributes['type']);
     }
 
 

@@ -16,7 +16,7 @@ enum ReportReasons: string
             self::FAKE => "It seems like a fake company",
             self::MISLEADING_CONTENT => "It shared a misleading content",
             self::ILLEGAL => "It is doing something illegal or forbidden",
-            self::REPEATED => "It post repeated jobs",
+            self::REPEATED => "It posts repeated jobs",
             self::OTHER => "Other"
         };
     }
@@ -39,5 +39,14 @@ enum ReportReasons: string
         }
 
         return self::OTHER->value;
+    }
+
+    public static function getCase($definer)
+    {
+        foreach (self::cases() as $case) {
+            if ($case->value === $definer) return $case;
+        }
+
+        return null;
     }
 }

@@ -38,7 +38,7 @@ class Report extends Component
     {
         $this->validate();
 
-        JobService::report($this->job, $this->report)
+        JobService::report($this->job, auth()->id(), $this->report)
             ? $this->success("report sent to support to be reveiwed , thanks")
             : $this->error();
     }

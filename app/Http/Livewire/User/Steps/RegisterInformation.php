@@ -100,7 +100,6 @@ class RegisterInformation extends StepComponent
         auth()->user()->update([
             "name" => $this->data('name'),
             "photo" => $this->data('image'),
-            "is_complete" => true
         ]);
     }
 

@@ -2,23 +2,23 @@
 
 namespace App\Enums;
 
-enum JobTypes: int
+enum JobTypes: string
 {
-    case Remotly = 1;
-    case Hybrid = 2;
-    case Permanently = 3;
-    case Full_Time = 4;
+    case Remotly = "remotly";
+    case Hybrid = 'hybrid';
+    case Permanently = "permanent";
+    case Full_Time = "fulltime";
 
-    public static function getTypeName(int $id)
+    public static function getTypeName($value)
     {
         foreach (self::cases() as $case) {
-            if ($case->value === $id) return $case->name();
+            if ($case->value === $value) return $case->name();
         }
 
         return false;
     }
 
-    public static function getTypeId(string $name)
+    public static function getTypeId($name)
     {
         foreach (self::cases() as $case) {
             if ($case->prefix() === strtolower($name)) return $case->value;
@@ -47,5 +47,17 @@ enum JobTypes: int
     protected function name()
     {
         return ucwords(str_replace("_", " ", $this->name));
+    }
+
+
+    public static function getCases(): array
+    {
+        $cases = [];
+
+        foreach (self::cases() as $case) {
+            $cases[$case->value] = $case->name();
+        }
+
+        return $cases;
     }
 }

@@ -55,7 +55,7 @@ class Card extends Component
     {
         $this->validate(["report.info" => "max:300"]);
 
-        CompanyService::report($this->company, $this->report)
+        CompanyService::report($this->company, auth()->id(), $this->report)
             ? $this->success("report sent to support to be reviewed, thanks !")
             : $this->error();
 

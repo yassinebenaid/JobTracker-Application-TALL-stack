@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\LivewireServiceProvider::class,
         \App\Providers\ViewServiceProvider::class,
+        App\Providers\FilamentServiceProvider::class
 
     ],
 

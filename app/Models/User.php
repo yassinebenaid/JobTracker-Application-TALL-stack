@@ -99,4 +99,31 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Job::class, "wishlist", "user_id", "job_id");
     }
+
+    public function getIsCompleteAttribute()
+    {
+        return !is_null($this->profile()->first());
+    }
+
+    public function getIsCompanyAttribute()
+    {
+        return $this->hasRole(Roles::ENTREPRENEUR->value);
+    }
+
+    public function getIsEmploeeAttribute()
+    {
+        return $this->hasRole(Roles::EMPLOEE->value);
+    }
+
+    public function getIsVerifiedAttribute()
+    {
+        return ($this->attributes['email_verified_at'] ?? null) !== null;
+    }
+
+
+    public function markEmailAsUnverified()
+    {
+        $this->email_verified_at = null;
+        $this->save();
+    }
 }

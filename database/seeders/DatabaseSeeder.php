@@ -11,6 +11,7 @@ use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +24,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(40)->create();
+
+        User::create([
+            "name" => "yassinebenaid",
+            "email" => "yassinebenaid@gmail.com",
+            "password" => Hash::make("helloworld")
+        ]);
+
 
         Skill::factory(50)->create();
 

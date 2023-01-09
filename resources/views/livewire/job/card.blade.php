@@ -15,7 +15,7 @@
     {{-- body --}}
     <div>
 
-        <div class="flex gap-3 px-2">
+        <div class="flex gap-3 px-2 ">
             <div class="px-2 py-1 font-bold text-green-700 bg-green-100 rounded-lg w-max"><i
                     class="mx-2 bi bi-cash-coin"></i> {{ $job->salary }}$</div>
             <div class="px-2 py-1 font-bold rounded-lg bg-slate-100 text-slate-700 w-max"><i

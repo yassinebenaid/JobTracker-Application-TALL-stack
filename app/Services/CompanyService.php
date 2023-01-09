@@ -39,10 +39,11 @@ class CompanyService
         }
     }
 
-    public static function report(User $company, array $report)
+    public static function report(User $company, int $reporter_id, array $report)
     {
         try {
             $company->reports()->create([
+                "reporter_id" => $reporter_id,
                 "info" => $report['info'],
                 "reason" => ReportReasons::getReasonDefiner($report["reason"])
             ]);

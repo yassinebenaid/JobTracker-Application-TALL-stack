@@ -65,10 +65,11 @@ class JobService
         }
     }
 
-    public static function report(Job $job, array $report)
+    public static function report(Job $job, int $reporter_id, array $report)
     {
         try {
             $job->reports()->create([
+                "reporter_id" => $reporter_id,
                 "info" => $report['info'],
                 "reason" => ReportReasons::getReasonDefiner($report['reason'])
             ]);
