@@ -17,21 +17,29 @@
         </div>
         <div>
             <ul class="flex items-center text-2xl gap-7">
-                <li x-data="{ shown: false }" x-on:new:wishlist.window="shown=true" class="relative">
-                    <a href="{{ route('wishlist.index') }}"> <i
-                            class="transition-all cursor-pointer bi bi-heart hover:text-sky-500"></i></a>
-                    <x-new x-show="shown" />
-                </li>
 
                 @entrepreneur
-                    <li><a href="{{ route('application.index') }}">
+                    <li title="My jobs"><a href="{{ route('application.index') }}">
+                            <i class="transition-all cursor-pointer bi bi-briefcase hover:text-sky-500"></i>
+                        </a>
+                    </li>
+
+                    <li title="applications"><a href="{{ route('application.index') }}">
                             <i class="transition-all cursor-pointer bi bi-journal hover:text-sky-500"></i>
                         </a>
                     </li>
                 @endentrepreneur
 
 
+                <li x-data="{ shown: false }" x-on:new:wishlist.window="shown=true" class="relative"
+                    title="bookmark list">
+                    <a href="{{ route('wishlist.index') }}"> <i
+                            class="transition-all cursor-pointer bi bi-heart hover:text-sky-500"></i></a>
+                    <x-new x-show="shown" x-cloak />
+                </li>
+
                 <livewire:home.notifications />
+
 
 
                 <li x-data="dropdown" class="relative">

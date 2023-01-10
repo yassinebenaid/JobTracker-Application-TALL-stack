@@ -121,6 +121,7 @@ class User extends Authenticatable
     }
 
 
+
     public function markEmailAsUnverified()
     {
         $this->email_verified_at = null;

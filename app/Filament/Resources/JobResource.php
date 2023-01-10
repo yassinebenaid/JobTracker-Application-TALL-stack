@@ -8,11 +8,15 @@ use App\Filament\Resources\JobResource\Pages;
 use App\Filament\Resources\JobResource\RelationManagers;
 use App\Models\Job;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TextInput\Mask;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -29,6 +33,8 @@ class JobResource extends Resource
     protected static ?string $recordTitleAttribute = "title";
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
+    protected static  $record;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -42,17 +48,12 @@ class JobResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')->label("#"),
                 Tables\Columns\TextColumn::make('user.name')->label("Company name"),
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('country'),
-                Tables\Columns\TextColumn::make('city'),
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('salary'),
-                Tables\Columns\TextColumn::make('description')->words(6),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                ComponentProvider::DateColumn("created_at"),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make("type")->multiple()->options(JobTypes::getCases()),
@@ -104,41 +105,54 @@ class JobResource extends Resource
 
     private static function getFormAsWizard()
     {
-        return Forms\Components\Wizard::make([
-            Step::make("Ownership and location")->schema([
+        return
+            Card::make([
 
-                Forms\Components\Select::make('company')
-                    ->required()
-                    ->relationship("user", "name"),
-                Forms\Components\TextInput::make('country')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('city')
-                    ->required()
-                    ->maxLength(255),
-            ]),
-            Step::make('job Information')->schema([
+                Forms\Components\Wizard::make([
 
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+                    Step::make('job Information')->schema([
+
+                        Select::make("company")->relationship("user", "name")
+                            ->visibleOn("create")
+                            ->required(),
+
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255),
 
 
-                Forms\Components\Select::make('type')
-                    ->required()
-                    ->options(JobTypes::getCases()),
-                Forms\Components\TextInput::make('salary')
-                    ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->maxLength(65535),
-                Forms\Components\Textarea::make('criteria')->label("criteria (seperated by coma)"),
-            ]),
-            Step::make("Job required skills")->schema([
-                Forms\Components\Select::make("skills")->relationship("skills", "name")->multiple()
-            ])
-        ]);
+                        Forms\Components\Select::make('type')
+                            ->required()
+                            ->options(JobTypes::getCases()),
+
+                        Forms\Components\TextInput::make('salary')
+                            ->required()
+                            ->numeric()
+                            ->mask(fn (Mask $mask) => $mask->pattern("000.000.000")),
+
+                        Forms\Components\Textarea::make('description')
+                            ->required()
+                            ->maxLength(65535),
+                        Forms\Components\Textarea::make('criteria')->label("Conditions (seperated by coma)"),
+                    ]),
+
+                    Step::make("location")->schema([
+
+                        Forms\Components\TextInput::make('country')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('city')
+                            ->required()
+                            ->maxLength(255),
+                    ]),
+
+                    Step::make("Job required skills")->schema([
+                        Forms\Components\Select::make("skills")->relationship("skills", "name")->multiple()
+                    ])
+                ])
+            ]);
     }
+
 
     private static function getFormAsSection()
     {
@@ -146,10 +160,13 @@ class JobResource extends Resource
 
             Tab::make('job Information')->schema([
 
-                TextInput::make('title')
-                    ->maxLength(255),
+                TextInput::make('id')->label("#"),
+
+                TextInput::make('title'),
 
                 TextInput::make('type'),
+
+                TagsInput::make("skills")->label("Required skills"),
 
                 TextInput::make('salary'),
 
@@ -157,11 +174,13 @@ class JobResource extends Resource
 
                 TextInput::make('city'),
 
-                Select::make("skills")->relationship("skills", "name")->multiple(),
-
-                Textarea::make('criteria'),
+                KeyValue::make("criteria")
+                    ->keyLabel("#")
+                    ->valueLabel("condition"),
 
                 Textarea::make('description'),
+
+                ComponentProvider::DateInput('created_at'),
 
             ]),
             Tab::make("Owner information")->schema([
@@ -172,7 +191,7 @@ class JobResource extends Resource
                 TextInput::make('company.profile.country'),
                 TextInput::make('company.profile.job')->label("Industry"),
 
-                ComponentProvider::formatedDate(TextInput::make('company.created_at')->label("Joined at")),
+                ComponentProvider::DateInput('company.created_at'),
 
 
             ]),

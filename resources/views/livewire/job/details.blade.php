@@ -18,7 +18,7 @@
 
                     </div>
 
-                    <livewire:application.form :company_id="$this->job->user->id" :job_id="$this->job->id" :expected_salary="$this->job->salary" />
+                    <livewire:application.form :company_id="$this->job->user->id" :job_id="$this->job->id" />
 
                 </div>
             @endemploee
@@ -99,7 +99,7 @@
             </ul>
         @endif
 
-        <div class="px-3 pb-5 tracking-wide text-gray-500 border-b">{{ $this->job->description }} ===========</div>
+        <div class="px-3 pb-5 tracking-wide text-gray-500 border-b">{{ $this->job->description }}</div>
     </div>
 
 

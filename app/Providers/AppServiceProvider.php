@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Collection::macro("incrementKeys", function () {
+            $new = [];
+
+            /** @var \Illuminate\Support\Collection $this
+             * @var int $key
+             */
+            foreach ($this->items as $key => $value) {
+                $new[++$key] = $value;
+            }
+
+            return $new;
+        });
     }
 }

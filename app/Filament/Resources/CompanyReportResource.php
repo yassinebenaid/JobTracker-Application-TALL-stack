@@ -9,6 +9,8 @@ use App\Models\Report;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -41,19 +43,21 @@ class CompanyReportResource extends Resource
     {
         return $form
             ->schema([
-                JobReportResource::getReportMainSection(),
+                Tabs::make("Report")->schema([
+                    Tab::make("Report")->schema(
+                        JobReportResource::getReportSection(),
+                    ),
 
-                Section::make('Reported Company')->schema([
-                    Forms\Components\TextInput::make("company.id"),
-                    Forms\Components\TextInput::make("company.name"),
-                    Forms\Components\TextInput::make("company.email"),
-                    Forms\Components\TextInput::make("company.created_at")
-                        ->label('Joined at')
-                        ->formatStateUsing(fn ($state) => Carbon::make($state)->format("D d-M-Y  H:i")),
-
-                ])->description("The company that was reported")
-                    ->collapsed()
-            ]);
+                    Tab::make("Company")->schema([
+                        Forms\Components\TextInput::make("company.id"),
+                        Forms\Components\TextInput::make("company.name"),
+                        Forms\Components\TextInput::make("company.email"),
+                        Forms\Components\TextInput::make("company.created_at")
+                            ->label('Joined at')
+                            ->formatStateUsing(fn ($state) => Carbon::make($state)->format("D d-M-Y  H:i")),
+                    ]),
+                ])
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table

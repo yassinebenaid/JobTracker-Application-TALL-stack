@@ -6,6 +6,7 @@ use App\Enums\Roles;
 use App\Filament\ComponentProvider;
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Filament\Resources\CompanyResource\RelationManagers;
+use App\Filament\Resources\CompanyResource\RelationManagers\JobsRelationManager;
 use App\Models\Company;
 use App\Models\User;
 use Filament\Forms;
@@ -53,7 +54,8 @@ class CompanyResource extends Resource
                             ->avatar(),
                         Forms\Components\TextInput::make('name')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->unique("users", "name"),
 
                         Forms\Components\TextInput::make('email')
                             ->email()
@@ -113,7 +115,7 @@ class CompanyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            JobsRelationManager::class
         ];
     }
 

@@ -6,16 +6,18 @@ enum JobTypes: string
 {
     case Remotly = "remotly";
     case Hybrid = 'hybrid';
-    case Permanently = "permanent";
+    case Permanently = "permanently";
     case Full_Time = "fulltime";
 
     public static function getTypeName($value)
     {
         foreach (self::cases() as $case) {
-            if ($case->value === $value) return $case->name();
+            if ($case->value === $value) {
+                return $case->name();
+            }
         }
 
-        return false;
+        return null;
     }
 
     public static function getTypeId($name)
@@ -24,7 +26,7 @@ enum JobTypes: string
             if ($case->prefix() === strtolower($name)) return $case->value;
         }
 
-        return false;
+        return self::Hybrid->value;
     }
 
     protected function prefix()

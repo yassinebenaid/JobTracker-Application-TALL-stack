@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\JobResource\Pages;
 
+use App\Enums\JobTypes;
 use App\Filament\Resources\JobResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -25,6 +26,7 @@ class EditJob extends EditRecord
             ? json_encode($data["criteria"])
             : json_encode(explode(",", $data['criteria']));
 
+        $data["type"] = JobTypes::getTypeId($data['type']);
 
         return  $data;
     }

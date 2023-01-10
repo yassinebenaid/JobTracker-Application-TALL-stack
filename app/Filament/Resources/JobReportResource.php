@@ -14,6 +14,8 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -46,34 +48,30 @@ class JobReportResource extends Resource
     {
         return  $form
             ->schema([
-                self::getReportMainSection(),
+                Tabs::make("Report")->schema([
+                    Tab::make('Report')->schema(
+                        self::getReportSection(),
+                    ),
+                    Tab::make('Job')->schema([
+                        TextInput::make('job.id')->label("Job id"),
+                        TextInput::make('job.title'),
+                        TextInput::make('job.country'),
+                        TextInput::make('job.city'),
+                        TextInput::make('job.type'),
+                        TextInput::make('job.salary'),
+                        Textarea::make('job.description'),
+                        DateTimePicker::make('job.created_at')->label('Posted at'),
+                    ]),
 
+                    Tab::make("Job Owner")->schema([
+                        Forms\Components\TextInput::make("job-owner.id"),
+                        Forms\Components\TextInput::make("job-owner.name"),
+                        Forms\Components\TextInput::make("job-owner.email"),
+                        ComponentProvider::DateInput("job-owner.created_at"),
+                    ])
+                ])
 
-                Section::make("Reported Job")->schema([
-                    TextInput::make('job.id')->label("Job id"),
-                    TextInput::make('job.title'),
-                    TextInput::make('job.country'),
-                    TextInput::make('job.city'),
-                    TextInput::make('job.type'),
-                    TextInput::make('job.salary'),
-                    Textarea::make('job.description'),
-                    DateTimePicker::make('job.created_at')->label('Posted at'),
-
-                ])->description("The job that was reported")
-                    ->collapsed(),
-
-
-                Section::make('Job Owner')->schema([
-                    Forms\Components\TextInput::make("job-owner.id"),
-                    Forms\Components\TextInput::make("job-owner.name"),
-                    Forms\Components\TextInput::make("job-owner.email"),
-                    Forms\Components\TextInput::make("job-owner.created_at")
-                        ->label('Joined at')
-                        ->formatStateUsing(fn ($state) => Carbon::make($state)->format("D d-M-Y  H:i")),
-
-                ])->description("The company that posted the job")
-                    ->collapsed()
-            ]);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -85,9 +83,6 @@ class JobReportResource extends Resource
                 ComponentProvider::ReportReasonColumn("job"),
                 Tables\Columns\TextColumn::make('info')->label("Message"),
                 ComponentProvider::DateColumn("created_at", "Reported at"),
-            ])
-            ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -113,20 +108,14 @@ class JobReportResource extends Resource
         ];
     }
 
-    public static function getReportMainSection()
+    public static function getReportSection(): array
     {
-        return Section::make("Report")->schema([
-
+        return [
             Forms\Components\TextInput::make("reporter")->label('Reporter'),
             Forms\Components\TextInput::make('reason')->label("Report reason"),
             Forms\Components\Textarea::make('info')->label("Details"),
-            Forms\Components\TextInput::make("created_at")
-                ->label('Reported at')
-                ->formatStateUsing(fn ($state) => Carbon::make($state)->format("D d-M-Y  H:i"))
+            ComponentProvider::DateInput("created_at", "Reported at")
 
-        ])->description("The main report information")
-            ->registerActions([
-                Forms\Components\Actions\Action::make('test')->action(fn () => dd(4))
-            ]);
+        ];
     }
 }

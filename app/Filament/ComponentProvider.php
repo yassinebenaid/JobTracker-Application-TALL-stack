@@ -4,6 +4,7 @@ namespace App\Filament;
 
 use App\Enums\ReportReasons;
 use Carbon\Carbon;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
@@ -19,10 +20,13 @@ class ComponentProvider
             ->formatStateUsing(fn ($state) => Carbon::make($state)->format("d-M-Y H:i"));
     }
 
-    public static function formatedDate(TextColumn|TextInput $date)
+    public static function DateInput($name, $label = null)
     {
-        return $date->formatStateUsing(fn ($state) => Carbon::make($state)->format("d-M-Y H:i"));
+        return  TextInput::make($name)
+            ->label($label ?? ucfirst(str_replace('_', ' ', $name)))
+            ->formatStateUsing(fn ($state) => Carbon::make($state)->format("d-M-Y H:i"));
     }
+
 
     public static function ReportReasonColumn($reported)
     {

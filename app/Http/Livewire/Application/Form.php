@@ -13,7 +13,7 @@ class Form extends Component
     use FireStatusBrowserEvents;
 
     public $expected_salary;
-    public $cover;
+    public $cover = '';
     public $company_id;
     public $job_id;
 
@@ -41,8 +41,11 @@ class Form extends Component
 
         if ($application = ApplicationService::new($this->all())) :
 
-            // dispatch(new sendNewApplicationEmail(auth()->id(), $this->company_id, $this->cover,  $application->id));
+
             ApplicationService::notifyTheCompany($application);
+
+            $this->reset("cover", "expected_salary");
+
 
             $this->success("your application was sent successfully, waiting the company to review it and reply.");
 
