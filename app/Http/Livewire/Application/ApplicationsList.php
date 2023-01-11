@@ -2,17 +2,14 @@
 
 namespace App\Http\Livewire\Application;
 
+use App\Helpers\Promise;
+use App\Http\Livewire\BaseComponent;
 use App\Notifications\ApplicationAccepted;
 use App\Notifications\JobApplicationRefused;
 use App\Services\ApplicationService;
-use App\Traits\FireStatusBrowserEvents;
-use Livewire\Component;
 
-class ApplicationsList extends Component
+class ApplicationsList extends BaseComponent
 {
-    use FireStatusBrowserEvents;
-
-
     public $selected;
 
 
@@ -55,13 +52,15 @@ class ApplicationsList extends Component
      */
     public function accept()
     {
-        $this->selected->delete();
+        Promise::make(fn () => $this->selected->delete())
 
-        $this->selected->emploee->notify(new ApplicationAccepted($this->selected->job->title));
+            ->if(true, function () {
+                $this->selected->emploee->notify(new ApplicationAccepted($this->selected->job->title));
+                $this->updateSelectedApplication();
+                $this->info("application accepted , the emploee will be alerted !");
+            })
 
-        $this->updateSelectedApplication();
-
-        $this->info("application accepted , the emploee will be alerted !");
+            ->onFalsy(fn () => $this->error());
     }
 
     /**
@@ -71,12 +70,14 @@ class ApplicationsList extends Component
      */
     public function deny()
     {
-        $this->selected->delete();
+        Promise::make(fn () => $this->selected->delete())
 
-        $this->selected->emploee->notify(new JobApplicationRefused($this->selected->job->title));
+            ->if(true, function () {
+                $this->selected->emploee->notify(new JobApplicationRefused($this->selected->job->title));
+                $this->updateSelectedApplication();
+                $this->info("application refused, the emploee will be alerted !");
+            })
 
-        $this->updateSelectedApplication();
-
-        $this->info("application refused, the emploee will be alerted !");
+            ->onFalsy(fn () => $this->error());
     }
 }

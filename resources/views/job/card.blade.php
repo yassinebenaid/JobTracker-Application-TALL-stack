@@ -22,11 +22,11 @@
                     class="mx-2 bi bi-briefcase-fill"></i> {{ $job->type }}</div>
         </div>
 
-        @if ($job->criteria->isNotEmpty())
+        @if ($job->conditions->isNotEmpty())
 
             <ul class="flex flex-col py-3 text-gray-400">
-                @foreach ($job->criteria as $criteria)
-                    <li class="text-sm">• {{ $criteria }} </li>
+                @foreach ($job->conditions as $condition)
+                    <li class="text-sm">• {{ $condition }} </li>
                 @endforeach
             </ul>
         @endif

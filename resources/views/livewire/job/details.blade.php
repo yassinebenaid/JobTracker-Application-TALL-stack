@@ -1,9 +1,16 @@
-<div x-data x-init="$dispatch('job:selected', {{ $this->jobId }})"
+<div x-data x-init="$dispatch('job:selected', {{ $this->job->id }})"
     class="relative bg-white h-[47rem] border shadow  rounded-lg overflow-scroll pb-20 no-scroll">
     <header class="p-5 shadow-md">
 
 
-        <div class="text-4xl font-bold">{{ $this->job->title }}</div>
+        <div class="flex justify-between">
+            <div class="text-4xl font-bold">{{ $this->job->title }}</div>
+
+            @if ($withControle)
+                @include('job.control', ['type' => $job->type])
+            @endif
+
+        </div>
         <div class="text-lg text-gray-500">{{ $this->job->user->name }}</div>
 
 
@@ -90,11 +97,11 @@
     <div class="p-5">
         <div class="mb-5 text-2xl font-semibold">Job Description</div>
 
-        @if ($this->job->criteria->isNotEmpty())
+        @if ($this->job->conditions->isNotEmpty())
 
             <ul class="flex flex-col py-3 text-gray-500">
-                @foreach ($this->job->criteria as $criteria)
-                    <li class="text-sm">• {{ $criteria }} </li>
+                @foreach ($this->job->conditions as $condition)
+                    <li class="text-sm">• {{ $condition }} </li>
                 @endforeach
             </ul>
         @endif

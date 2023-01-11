@@ -2,14 +2,12 @@
 
 namespace App\Http\Livewire\Job;
 
-use App\Models\Job;
+use App\Http\Livewire\BaseComponent;
 use App\Services\JobService;
 use App\Services\SkillService;
-use Illuminate\Support\Collection;
-use Livewire\Component;
 use Livewire\WithPagination;
 
-class JobsList extends Component
+class JobsList extends BaseComponent
 {
     use WithPagination;
 

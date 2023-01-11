@@ -31,7 +31,7 @@ document.addEventListener("alpine:init", () => {
             this.open = !this.open
         },
 
-        hide() {
+        hide(el = null) {
             this.open = false
         },
     }))

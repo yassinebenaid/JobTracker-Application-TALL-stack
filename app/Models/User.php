@@ -102,7 +102,7 @@ class User extends Authenticatable
 
     public function getIsCompleteAttribute()
     {
-        return !is_null($this->profile()->first());
+        return (bool)($this->profile()->count());
     }
 
     public function getIsCompanyAttribute()

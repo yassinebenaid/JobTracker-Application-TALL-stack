@@ -27,31 +27,19 @@ class CompanyService
 
     public static function newReview(User $company, $rate, $feedback)
     {
-        try {
-            $company->reviews()->updateOrCreate(["user_id" => auth()->id()], [
-                "rate" => $rate,
-                "feedback" => $feedback
-            ]);
-
-            return true;
-        } catch (\Throwable $th) {
-            return false;
-        }
+        $company->reviews()->updateOrCreate(["user_id" => auth()->id()], [
+            "rate" => $rate,
+            "feedback" => $feedback
+        ]);
     }
 
     public static function report(User $company, int $reporter_id, array $report)
     {
-        try {
-            $company->reports()->create([
-                "reporter_id" => $reporter_id,
-                "info" => $report['info'],
-                "reason" => ReportReasons::getReasonDefiner($report["reason"])
-            ]);
-
-            return true;
-        } catch (\Throwable $th) {
-            return false;
-        }
+        $company->reports()->create([
+            "reporter_id" => $reporter_id,
+            "info" => $report['info'],
+            "reason" => ReportReasons::getReasonDefiner($report["reason"])
+        ]);
     }
 }
 // inRandomOrder()->

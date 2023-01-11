@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Traits;
+namespace App\Http\Livewire;
 
-use Livewire\ComponentConcerns\ReceivesEvents;
+use Livewire\Component;
 
-trait FireStatusBrowserEvents
+class BaseComponent extends Component
 {
-    use ReceivesEvents;
-
     public function success(string $message)
     {
         return $this->dispatchBrowserEvent("status:success", [

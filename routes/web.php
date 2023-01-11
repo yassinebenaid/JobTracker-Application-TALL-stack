@@ -5,6 +5,7 @@ use App\Http\Controllers\ShowApplicationController;
 use App\Http\Controllers\ShowCompaniesPageController;
 use App\Http\Controllers\ShowHomePageController;
 use App\Http\Controllers\ShowWishlistPageController;
+use App\Http\Livewire\Job\MyList;
 use App\Http\Livewire\User\CompleteRegistration;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ Route::middleware(["auth", "completed"])->group(function () {
     Route::get("/wishlist", ShowWishlistPageController::class)->name("wishlist.index");
 
     Route::middleware("entrepreneur")->get('/applications', ShowApplicationController::class)->name('application.index');
-    Route::middleware("entrepreneur")->get('/my-jobs', ShowApplicationController::class)->name('my-jobs.index');
+    Route::middleware("entrepreneur")->get('/my-jobs', MyList::class)->name('my-jobs.index');
 
     Route::middleware('not_completed')->get("/register/complete", CompleteRegistration::class)->name("complete-registration");
 

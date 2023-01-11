@@ -6,7 +6,7 @@ use App\Enums\JobTypes;
 use App\Models\Filters\JobFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use stdClass;
 
 class Job extends Model
 {
@@ -49,15 +49,15 @@ class Job extends Model
 
     public function getTypeAttribute()
     {
-        return JobTypes::getTypeName($this->attributes['type']);
+        return JobTypes::getCase($this->attributes['type']);
     }
 
-
-    public function getCriteriaAttribute()
+    public function getConditionsAttribute()
     {
-        return collect(json_decode($this->attributes['criteria']));
-    }
+        $criteria = explode(",", $this->attributes['criteria']);
 
+        return collect($criteria);
+    }
 
     public function scopeFilter($query, array $filters)
     {

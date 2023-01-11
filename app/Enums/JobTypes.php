@@ -46,11 +46,20 @@ enum JobTypes: string
     }
 
 
-    protected function name()
+    public function name()
     {
         return ucwords(str_replace("_", " ", $this->name));
     }
 
+    public static function getCase($value)
+    {
+
+        foreach (self::cases() as $case) {
+            if ($case->value === $value) return  $case;
+        }
+
+        return null;
+    }
 
     public static function getCases(): array
     {
@@ -58,6 +67,17 @@ enum JobTypes: string
 
         foreach (self::cases() as $case) {
             $cases[$case->value] = $case->name();
+        }
+
+        return $cases;
+    }
+
+    public static function getValues()
+    {
+        $cases = [];
+
+        foreach (self::cases() as $case) {
+            $cases[] = $case->value;
         }
 
         return $cases;

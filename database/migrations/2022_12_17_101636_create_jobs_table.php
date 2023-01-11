@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("type");
             $table->integer("salary");
             $table->text("description");
-            $table->json("criteria")->nullable();
+            $table->string("criteria", 1000)->nullable();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
             $table->timestamps();
         });

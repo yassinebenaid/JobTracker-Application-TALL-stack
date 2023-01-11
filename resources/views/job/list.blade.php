@@ -1,4 +1,4 @@
-@props(['jobs', 'links' => false])
+@props(['jobs', 'links' => false, 'controle' => false])
 
 
 
@@ -6,7 +6,7 @@
     class="pb-20 flex relative flex-col gap-3 overflow-scroll h-[46.5rem] p-3 no-scroll">
 
     @foreach ($jobs as $job)
-        <livewire:job.card :job="$job" :wire:key="$job->id" />
+        @include('job.card', ['job' => $job])
     @endforeach
 
 
@@ -30,5 +30,5 @@
 </div>
 
 @if ($jobs->isNotEmpty())
-    <livewire:job.details :jobId="$jobs->first()?->id" />
+    <livewire:job.details :job="$jobs->first()" :controle="$controle" />
 @endif

@@ -3,15 +3,13 @@
 namespace App\Http\Livewire\Company;
 
 use App\Enums\ReportReasons;
+use App\Helpers\Promise;
+use App\Http\Livewire\BaseComponent;
 use App\Services\CompanyService;
 use App\Traits\FireStatusBrowserEvents;
-use Livewire\Component;
 
-class Card extends Component
+class Card extends BaseComponent
 {
-    use FireStatusBrowserEvents;
-
-
     public $company;
     public $opened = false;
 
@@ -44,9 +42,9 @@ class Card extends Component
     {
         $this->validate();
 
-        CompanyService::newReview($this->company, $this->rate, $this->feedback)
-            ? $this->success("review created successfully")
-            : $this->error();
+        Promise::make(fn () =>  CompanyService::newReview($this->company, $this->rate, $this->feedback))
+            ->then(fn () => $this->success("review created successfully"))
+            ->catch(fn () =>  $this->error());
 
         $this->load();
     }
@@ -55,9 +53,9 @@ class Card extends Component
     {
         $this->validate(["report.info" => "max:300"]);
 
-        CompanyService::report($this->company, auth()->id(), $this->report)
-            ? $this->success("report sent to support to be reviewed, thanks !")
-            : $this->error();
+        Promise::make(fn () => CompanyService::report($this->company, auth()->id(), $this->report))
+            ->then(fn () => $this->success("report sent to support to be reviewed, thanks !"))
+            ->catch(fn () =>  $this->error());
 
         $this->company->loadAvg("reviews", "rate");
     }

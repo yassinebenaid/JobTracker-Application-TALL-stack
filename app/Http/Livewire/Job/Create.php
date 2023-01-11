@@ -2,14 +2,16 @@
 
 namespace App\Http\Livewire\Job;
 
+use App\Enums\JobTypes;
 use App\Enums\Roles;
+use App\Helpers\Promise;
+use App\Http\Livewire\BaseComponent;
 use App\Services\JobService;
 use App\Services\SkillService;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Livewire\Component;
 
-class Form extends Component
+
+class Create extends BaseComponent
 {
     use AuthorizesRequests;
 
@@ -20,7 +22,7 @@ class Form extends Component
     public $salary;
     public $type;
     public $description;
-    public $criteria = [];
+    public $criteria;
     public $required_skills = [];
 
     protected function rules()
@@ -30,7 +32,8 @@ class Form extends Component
             "country" => "required|max:255",
             "city" => "required|max:255",
             "salary" => "required|integer",
-            "type" => "required|in:1,2,3,4",
+            "type" => "required",
+            "criteria" => "max:1000",
             "description" => "required",
         ];
     }
@@ -49,15 +52,13 @@ class Form extends Component
         $this->validate();
 
 
-        if (JobService::new($this->all()))
 
-            return $this->dispatchBrowserEvent("status:success", [
-                "message" => "job created successfully."
-            ]);
+        Promise::make(fn () => JobService::new($this->all()))
 
-        else
-            $this->dispatchBrowserEvent("status:error", [
-                "message" => "failed to create the job, check fo your internet and try again"
-            ]);
+            ->then(fn () =>   $this->emitUp("job:list-updated"))
+
+            ->then(fn () =>   $this->success("job created successfully."))
+
+            ->catch(fn () => $this->error("failed to create the job, checkout the data and try again"));
     }
 }

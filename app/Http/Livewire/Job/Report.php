@@ -3,14 +3,12 @@
 namespace App\Http\Livewire\Job;
 
 use App\Enums\ReportReasons;
+use App\Helpers\Promise;
+use App\Http\Livewire\BaseComponent;
 use App\Services\JobService;
-use App\Traits\FireStatusBrowserEvents;
-use Livewire\Component;
 
-class Report extends Component
+class Report extends BaseComponent
 {
-    use FireStatusBrowserEvents;
-
     public $job;
 
 
@@ -38,8 +36,8 @@ class Report extends Component
     {
         $this->validate();
 
-        JobService::report($this->job, auth()->id(), $this->report)
-            ? $this->success("report sent to support to be reveiwed , thanks")
-            : $this->error();
+        Promise::make(fn () =>  JobService::report($this->job, auth()->id(), $this->report))
+            ->then(fn () => $this->success("report sent to support to be reveiwed , thanks"))
+            ->catch(fn () => $this->error());
     }
 }

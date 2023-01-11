@@ -19,7 +19,7 @@
             <ul class="flex items-center text-2xl gap-7">
 
                 @entrepreneur
-                    <li title="My jobs"><a href="{{ route('application.index') }}">
+                    <li title="My jobs"><a href="{{ route('my-jobs.index') }}">
                             <i class="transition-all cursor-pointer bi bi-briefcase hover:text-sky-500"></i>
                         </a>
                     </li>

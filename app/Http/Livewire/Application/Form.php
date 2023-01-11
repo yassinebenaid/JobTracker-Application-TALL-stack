@@ -2,15 +2,13 @@
 
 namespace App\Http\Livewire\Application;
 
-use App\Jobs\sendNewApplicationEmail;
+use App\Helpers\Promise;
+use App\Http\Livewire\BaseComponent;
 use App\Services\ApplicationService;
-use App\Traits\FireStatusBrowserEvents;
-use Faker\Provider\Lorem;
-use Livewire\Component;
 
-class Form extends Component
+
+class Form extends BaseComponent
 {
-    use FireStatusBrowserEvents;
 
     public $expected_salary;
     public $cover = '';
@@ -39,20 +37,12 @@ class Form extends Component
     {
         $this->validate();
 
-        if ($application = ApplicationService::new($this->all())) :
+        Promise::make(fn () => ApplicationService::new($this->all()))
 
+            ->then(fn ($application) =>  ApplicationService::notifyTheCompany($application))
 
-            ApplicationService::notifyTheCompany($application);
+            ->then(fn () =>  $this->success("your application was sent successfully, waiting the company to review it."))
 
-            $this->reset("cover", "expected_salary");
-
-
-            $this->success("your application was sent successfully, waiting the company to review it and reply.");
-
-        else :
-
-            $this->error();
-
-        endif;
+            ->catch(fn () =>  $this->error());
     }
 }

@@ -51,15 +51,15 @@
         </div>
     </div>
 
-    <div>
-        <div style="padding:1rem;font-size: 1.2rem;border-bottom:1px solid #bde0fe">
-            Bio
+    @if ($user->profile->bio)
+        <div>
+            <div style="padding:1rem;font-size: 1.2rem;border-bottom:1px solid #bde0fe">
+                Bio
+            </div>
+            <p style="font-size:14px;padding:1rem">{{ $user->profile->bio }} </p>
         </div>
-        <p style="font-size:14px;padding:1rem">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ea cumque provident harum repellendus fugit
-            dolor eum minima vitae. Vel suscipit quae voluptatibus nihil unde rerum pariatur soluta. Modi, itaque.
-        </p>
-    </div>
+    @endif
+
     <div>
         <div style="padding:1rem;font-size: 1.2rem;border-bottom:1px solid #bde0fe">
             Education
