@@ -43,7 +43,7 @@ class JobFilter extends Filter
     {
         $this->builder->when($types ?? false, function ($query, $types) {
 
-            $types = JobTypes::getTypesIds($types);
+            $types = JobTypes::getDefiners($types);
 
             $query->when($types, function ($query, $types) {
                 $query->whereExists(fn ($query) =>  $query->whereIn("type", $types));

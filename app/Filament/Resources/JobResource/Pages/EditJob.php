@@ -26,7 +26,7 @@ class EditJob extends EditRecord
             ? json_encode($data["criteria"])
             : json_encode(explode(",", $data['criteria']));
 
-        $data["type"] = JobTypes::getTypeId($data['type']);
+        $data["type"] = JobTypes::getDefiner($data['type']);
 
         return  $data;
     }

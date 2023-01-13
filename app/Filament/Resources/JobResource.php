@@ -32,6 +32,7 @@ class JobResource extends Resource
     protected static ?string $model = Job::class;
 
     protected static ?string $recordTitleAttribute = "title";
+    protected static ?string $navigationGroup = 'others';
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
     protected static  $record;
@@ -57,7 +58,7 @@ class JobResource extends Resource
                 ComponentProvider::DateColumn("created_at"),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make("type")->multiple()->options(JobTypes::getCases()),
+                Tables\Filters\SelectFilter::make("type")->multiple()->options(JobTypes::getTypes()),
 
                 Tables\Filters\Filter::make("salary")->form([
                     Forms\Components\TextInput::make("min")->numeric(),
@@ -124,7 +125,7 @@ class JobResource extends Resource
 
                         Forms\Components\Select::make('type')
                             ->required()
-                            ->options(JobTypes::getCases()),
+                            ->options(JobTypes::getTypes()),
 
                         Forms\Components\TextInput::make('salary')
                             ->required()

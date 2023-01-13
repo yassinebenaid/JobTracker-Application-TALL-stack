@@ -9,7 +9,7 @@ enum JobTypes: string
     case Permanently = "permanently";
     case Full_Time = "fulltime";
 
-    public static function getTypeName($value)
+    public static function getName($value)
     {
         foreach (self::cases() as $case) {
             if ($case->value === $value) {
@@ -20,29 +20,33 @@ enum JobTypes: string
         return null;
     }
 
-    public static function getTypeId($name)
+
+    public static function getDefiner($name)
     {
         foreach (self::cases() as $case) {
             if ($case->prefix() === strtolower($name)) return $case->value;
         }
 
-        return self::Hybrid->value;
+        return null;
     }
+
+
 
     protected function prefix()
     {
         return strtolower(str_replace(["_", " "], "", trim($this->name())));
     }
 
-    public static function getTypesIds(array $names)
+
+    public static function getDefiners(array $names)
     {
-        $ids = [];
+        $definers = [];
 
         foreach ($names as $name) {
-            if ($id = self::getTypeId($name)) $ids[] =  $id;
+            if ($definer = self::getDefiner($name)) $definers[] =  $definer;
         }
 
-        return empty($ids) ? false : $ids;
+        return empty($definers) ? false : $definers;
     }
 
 
@@ -51,7 +55,8 @@ enum JobTypes: string
         return ucwords(str_replace("_", " ", $this->name));
     }
 
-    public static function getCase($value)
+
+    public static function getType($value)
     {
 
         foreach (self::cases() as $case) {
@@ -61,23 +66,13 @@ enum JobTypes: string
         return null;
     }
 
-    public static function getCases(): array
+
+    public static function getTypes(): array
     {
         $cases = [];
 
         foreach (self::cases() as $case) {
             $cases[$case->value] = $case->name();
-        }
-
-        return $cases;
-    }
-
-    public static function getValues()
-    {
-        $cases = [];
-
-        foreach (self::cases() as $case) {
-            $cases[] = $case->value;
         }
 
         return $cases;

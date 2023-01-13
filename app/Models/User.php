@@ -82,6 +82,19 @@ class User extends Authenticatable
             return  $this->hasMany(Application::class, "company_id");
     }
 
+
+    public function scopeCompany($query)
+    {
+        $query->role(Roles::ENTREPRENEUR->value);
+    }
+
+
+    public function scopeEmploee($query)
+    {
+        $query->role(Roles::EMPLOEE->value);
+    }
+
+
     public function scopeFilter($query, $search)
     {
         $filter = new UserFilter($query);

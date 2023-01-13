@@ -49,7 +49,7 @@ class Job extends Model
 
     public function getTypeAttribute()
     {
-        return JobTypes::getCase($this->attributes['type']);
+        return JobTypes::getType($this->attributes['type']);
     }
 
     public function getConditionsAttribute()

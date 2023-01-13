@@ -23,6 +23,7 @@ class ApplicationResource extends Resource
 {
     protected static ?string $model = Application::class;
 
+    protected static ?string $navigationGroup = 'others';
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form

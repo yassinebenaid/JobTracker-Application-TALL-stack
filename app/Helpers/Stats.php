@@ -4,17 +4,27 @@ namespace App\Helpers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 use function PHPUnit\Framework\returnSelf;
 
 class Stats
 {
+    protected Builder|Model $query;
     private array $stats = [];
     private string $last;
 
-    public function __construct(
-        protected Builder|Model $query
-    ) {
+    private function __construct()
+    {
+    }
+
+    public static function make(Builder|Model $query)
+    {
+        $stats = new static;
+
+        $stats->query = $query;
+
+        return $stats;
     }
 
     /**
@@ -23,11 +33,11 @@ class Stats
      * @param boolean $save_state
      * @return int total records
      */
-    public function total()
+    public function total($shorten = true)
     {
         $this->stats['total'] = $this->builder()->count();
 
-        return $this->getNumber('total');
+        return $this->getNumber('total', $shorten);
     }
 
     /**
@@ -67,11 +77,11 @@ class Stats
      */
     public function thisYearByMonth()
     {
-        return $this->builder()->selectRaw('MONTH(created_at) as month')
+        return $this->fillMissedMonths($this->builder()->selectRaw('MONTH(created_at) as month')
             ->selectRaw('count(*) as total')
             ->groupBy('month')
             ->whereRaw("YEAR(created_at) >= YEAR(CURRENT_TIMESTAMP)")
-            ->get()->pluck("total")->toArray();
+            ->get());
     }
 
     /**
@@ -119,6 +129,11 @@ class Stats
         return $this->stats['total'] > $this->stats['last_month'];
     }
 
+    /**
+     * get the improvement was achieved between now and last month
+     *
+     * @return int|float
+     */
     public function improvement()
     {
         if (!isset($this->stats['total'])) $this->total();
@@ -135,7 +150,7 @@ class Stats
      * @param boolean $shorten
      * @return integer|float|string
      */
-    protected function getNumber(string|int $number, bool $shorten = true): int|float|string
+    public function getNumber(string|int $number, bool $shorten = true): int|float|string
     {
         if (is_numeric($number))
             return match ($shorten) {
@@ -150,7 +165,26 @@ class Stats
         };
     }
 
+    private function fillMissedMonths(array|Collection $array)
+    {
+        $months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+
+        foreach ($months as $month) {
+            if ($array->filter(fn ($el) => $el["month"] === $month)->isEmpty()) {
+                $array[$month] = [
+                    "month" => $month,
+                    "total" => 0,
+                ];
+            }
+        }
+
+        $array = $array->toArray();
+
+        sort($array);
+
+        return collect($array)->pluck("total");
+    }
     /**
      * to avoid conflict between queries, we get only copy of the query
      *

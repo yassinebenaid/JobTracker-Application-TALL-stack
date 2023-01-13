@@ -7,6 +7,7 @@ use App\Filament\ComponentProvider;
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Filament\Resources\CompanyResource\RelationManagers;
 use App\Filament\Resources\CompanyResource\RelationManagers\JobsRelationManager;
+use App\Filament\Resources\CompanyResource\RelationManagers\ReviewsRelationManager;
 use App\Models\Company;
 use App\Models\User;
 use Filament\Forms;
@@ -115,7 +116,9 @@ class CompanyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            JobsRelationManager::class
+            ReviewsRelationManager::class,
+            JobsRelationManager::class,
+
         ];
     }
 

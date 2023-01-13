@@ -19,31 +19,33 @@ class StatsOverview extends BaseWidget
     protected function getCards(): array
     {
         return [
-            $this->getCard(User::role(Roles::ENTREPRENEUR->value), "Total Companies"),
-            $this->getCard(User::role(Roles::EMPLOEE->value), "Total Emploees"),
-            $this->getCard(Job::query(), "Total Jobs"),
-            $this->getCard(Application::query(), "Total Applications"),
+            $this->getCard(User::company(), "Total Companies", "companies"),
+            $this->getCard(User::emploee(), "Total Emploees", "emploees"),
+            $this->getCard(Job::query(), "Total Jobs", "jobs"),
+            $this->getCard(Application::query(), "Total Applications", "applications"),
         ];
     }
 
     protected function getCard(Model|Builder $model, $label)
     {
-        $companyStat =  new Stats($model);
 
-        return Card::make($label, $companyStat->total())
+        $stats =  Stats::make($model);
 
-            ->description($companyStat->improvement() . ($companyStat->wasIncreased() ? " increase" : "decrease"))
 
-            ->descriptionIcon($companyStat->wasIncreased() ? "heroicon-o-trending-up" : "heroicon-o-trending-down")
+        $total = $stats->total();
 
-            ->descriptionColor($companyStat->wasIncreased() ? "success" : "danger")
 
-            ->chart([
-                0,
-                ...$companyStat->thisYearByMonth(),
-            ])
+        return Card::make($label, $total)
 
-            ->chartColor($companyStat->wasIncreased() ? "success" : "danger");
+            ->description($stats->improvement() . ($stats->wasIncreased() ? " increase" : "decrease"))
+
+            ->descriptionIcon($stats->wasIncreased() ? "heroicon-o-trending-up" : "heroicon-o-trending-down")
+
+            ->descriptionColor($stats->wasIncreased() ? "success" : "danger")
+
+            ->chart([$stats->lastMonth(), $stats->getNumber("total", false)])
+
+            ->chartColor($stats->wasIncreased() ? "success" : "danger");
     }
 
     protected function getPollingInterval(): ?string
