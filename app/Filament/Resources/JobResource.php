@@ -6,6 +6,7 @@ use App\Enums\JobTypes;
 use App\Filament\ComponentProvider;
 use App\Filament\Resources\JobResource\Pages;
 use App\Filament\Resources\JobResource\RelationManagers;
+use App\Filament\Resources\JobResource\Widgets\JobStatsOverview;
 use App\Models\Job;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -196,5 +197,12 @@ class JobResource extends Resource
 
             ]),
         ])->visibleOn("view");
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            JobStatsOverview::class
+        ];
     }
 }

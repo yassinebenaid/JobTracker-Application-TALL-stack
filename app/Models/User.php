@@ -90,6 +90,13 @@ class User extends Authenticatable
             ->orByJobSpecification($search);
     }
 
+    public function scopeRecent($query, $date)
+    {
+        $filter = new UserFilter($query);
+
+        $filter->byDate($date);
+    }
+
     public function reports()
     {
         return $this->morphOne(Report::class, "reportable");

@@ -52,4 +52,20 @@ class UserFilter extends Filter
 
         return $this;
     }
+
+    public function byDate(string $date): static
+    {
+        $this->builder->when($date ?? false, function ($query, $date) {
+
+            $query->whereExists(function ($query) use ($date) {
+
+                $date = $this->getFormatedDate($date);
+
+
+                $query->whereDate("created_at", ">=", $date);
+            });
+        });
+
+        return $this;
+    }
 }
