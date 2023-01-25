@@ -30,4 +30,4 @@ view or download ther resume as pdf file .
 - run `php artisan queue:work`
 
 ## demo video
- https://www.youtube.com/TEditP_h3XM
+[ https://www.youtube.com/TEditP_h3XM](https://youtu.be/TEditP_h3XM)
